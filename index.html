@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>慕容子诚 | 官方网站入口</title>
+  <meta name="description" content="慕容子诚的个人创意空间。专注于和平精英画质优化、界面美化资源文件分享，提供最详尽的游戏修改与桌面美化教程，收录高清原创及定制壁纸，搭载极简巨型文字排版与个人特调音乐播放器。">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Orbitron:wght@500;700;900&family=Inter:wght@400&display=swap" rel="stylesheet">
+  
+  <!-- 引入本地 Three.js 库 (v0.160.0，支持 iridescence 薄膜干涉折射) -->
+  <script src="js/three.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #000000;
+      font-family: 'Orbitron', 'Inter', -apple-system, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* WebGL 画布层 */
+    #landing-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    /* 底部进入空间入口 */
+    .landing-enter {
+      position: absolute;
+      bottom: 8vh;
+      z-index: 10;
+      text-align: center;
+      width: 100%;
+      pointer-events: none;
+      animation: fadeInBtn 2s ease-out;
+    }
+
+    #enter-btn {
+      display: inline-block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: rgba(255, 255, 255, 0.45);
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 12px 32px;
+      border-radius: 30px;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      text-transform: uppercase;
+      cursor: pointer;
+      pointer-events: auto;
+      background: rgba(5, 5, 10, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    #enter-btn:hover {
+      color: #00f2fe;
+      border-color: #00f2fe;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.35);
+      transform: translateY(-2px);
+    }
+    
+    #enter-btn:active {
+      transform: translateY(1px);
+    }
+
+    @keyframes fadeInBtn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WebGL 渲染 Canvas -->
+  <canvas id="landing-canvas"></canvas>
+
+  <!-- 底部进入入口 -->
+  <div class="landing-enter">
+    <a href="main.html" id="enter-btn">ENTER SPACE / 进入空间</a>
+  </div>
+
+  <script>
+    // ==========================================================================
+    // 3D 玻璃环与中文文字混合排版逻辑 (Torus Glass Refraction)
+    // ==========================================================================
+
+    let scene, camera, renderer, textMesh, torus;
+    const canvas = document.getElementById('landing-canvas');
+
+    const mouse = { x: 0, y: 0 };
+    const targetMouse = { x: 0, y: 0 };
+
+    function init() {
+      if (typeof THREE === 'undefined') {
+        console.warn("Three.js 库未成功加载。");
+        return;
+      }
+
+      // 1. 初始化场景
+      scene = new THREE.Scene();
+
+      // 2. 初始化相机
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      
+      function adjustCameraZ() {
+        const aspect = window.innerWidth / window.innerHeight;
+        // 如果是手机竖屏，拉远相机防止文字和玻璃环超出两侧视口
+        if (aspect < 1.0) {
+          camera.position.z = 5.0 / aspect;
+        } else {
+          camera.position.z = 5.0;
+        }
+      }
+      adjustCameraZ();
+
+      // 3. 初始化渲染器
+      renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: true // 允许透明背景
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // 4. 材质反射光源设计
+      const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
+      scene.add(ambientLight);
+
+      // 上方强白光
+      const pointLight1 = new THREE.PointLight(0xffffff, 15, 100);
+      pointLight1.position.set(-2, 3.5, 3);
+      scene.add(pointLight1);
+
+      // 下方辅助光
+      const pointLight2 = new THREE.PointLight(0xffffff, 10, 100);
+      pointLight2.position.set(2, -3.5, 3);
+      scene.add(pointLight2);
+
+      // 霓虹紫光 (渲染玻璃炫酷的反光折射色调)
+      const pointLight3 = new THREE.PointLight(0xbd00ff, 20, 100);
+      pointLight3.position.set(2, 2, 2);
+      scene.add(pointLight3);
+
+      // 霓虹蓝光
+      const pointLight4 = new THREE.PointLight(0x00f2fe, 20, 100);
+      pointLight4.position.set(-2, -2, 2);
+      scene.add(pointLight4);
+
+      // 5. 动态生成 2D 文本画布，并映射为 3D 平面材质
+      const textCanvas = document.createElement('canvas');
+      textCanvas.width = 2048;
+      textCanvas.height = 512;
+      const ctx = textCanvas.getContext('2d');
+
+      // 绘制白字中文
+      ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 220px Montserrat, Inter, "Segoe UI", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      
+      // 核心落地页字样
+      ctx.fillText('慕容子诚', 1024, 256);
+
+      // 转换为纹理
+      const textTexture = new THREE.CanvasTexture(textCanvas);
+      textTexture.minFilter = THREE.LinearFilter; // 平滑抗锯齿缩放
+      
+      // 创建文本网格
+      const textGeometry = new THREE.PlaneGeometry(4.8, 1.2);
+      
+      // CRITICAL: transparent 设为 false，使用 alphaTest 剔除背景。
+      // 这能使文字作为不透明物体优先渲染，从而能被 glass torus 材质的 transmission 折射贴图完美捕捉并折射！
+      const textMaterial = new THREE.MeshBasicMaterial({
+        map: textTexture,
+        transparent: false,
+        alphaTest: 0.5,
+        side: THREE.DoubleSide
+      });
+      textMesh = new THREE.Mesh(textGeometry, textMaterial);
+      textMesh.position.set(0, 0, -0.05); // 稍微往后拉，作为折射背景
+      scene.add(textMesh);
+
+      // 6. 创建 3D 物理透明玻璃圆环 (MeshPhysicalMaterial)
+      const torusGeometry = new THREE.TorusGeometry(1.1, 0.42, 120, 80);
+      const torusMaterial = new THREE.MeshPhysicalMaterial({
+        metalness: 0.0,
+        roughness: 0.02,
+        iridescence: 1.0,                // 极光薄膜折射
+        iridescenceIOR: 1.6,             // 极光折射率
+        iridescenceThicknessRange: [100, 380],
+        transmission: 1.0,               // 100% 透光率
+        ior: 1.45,                       // 玻璃折射比率
+        thickness: 0.9,                  // 折射厚度
+        transparent: true,
+        opacity: 1.0
+      });
+
+      torus = new THREE.Mesh(torusGeometry, torusMaterial);
+      torus.position.set(0, 0, 0.22); // 悬浮偏向相机一侧，产生前后交织的深度遮挡和折射
+      scene.add(torus);
+
+      // 7. 绑定鼠标和视口缩放事件
+      window.addEventListener('mousemove', (e) => {
+        targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      });
+
+      window.addEventListener('touchmove', (e) => {
+        targetMouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
+        targetMouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
+      }, { passive: true });
+
+      // 点击网页任意地方跳转到 main.html 资源管理页面，操作极为便利
+      canvas.addEventListener('click', () => {
+        window.location.href = 'main.html';
+      });
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        adjustCameraZ();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // 8. 动画渲染循环
+      const clock = new THREE.Clock();
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const elapsedTime = clock.getElapsedTime();
+
+        // 玻璃环三维自转
+        if (torus) {
+          torus.rotation.x = elapsedTime * 0.42;
+          torus.rotation.y = elapsedTime * 0.28;
+        }
+
+        // 鼠标惯性物理插值
+        mouse.x += (targetMouse.x - mouse.x) * 0.05;
+        mouse.y += (targetMouse.y - mouse.y) * 0.05;
+
+        // 相机/场景轻微偏移，随鼠标产生 3D Parallax 视差晃动感
+        if (torus && textMesh) {
+          scene.rotation.y = mouse.x * 0.22;
+          scene.rotation.x = -mouse.y * 0.22;
+          
+          // 轻微水母式悬浮呼吸浮动效果
+          const breathing = Math.sin(elapsedTime * 1.5) * 0.05;
+          torus.position.y = breathing;
+          textMesh.position.y = breathing;
+        }
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    }
+
+    // 页面完全加载后启动 WebGL
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
