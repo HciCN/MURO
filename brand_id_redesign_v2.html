@@ -1,0 +1,694 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;700;900&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+.root{
+  background:#F5F0E8;
+  color:#1A1208;
+  font-family:'Outfit',sans-serif;
+  min-height:1400px;
+}
+
+/* ── TOP MASTHEAD ── */
+.masthead{
+  background:#1A1208;
+  padding:0 36px;
+  display:flex;
+  align-items:stretch;
+  justify-content:space-between;
+  border-bottom:3px solid #E8401C;
+  min-height:88px;
+}
+
+.mast-left{
+  display:flex;
+  align-items:center;
+  gap:0;
+  flex:1;
+}
+
+.mast-badge{
+  background:#E8401C;
+  color:#fff;
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  padding:4px 10px;
+  margin-right:20px;
+  text-transform:uppercase;
+  align-self:stretch;
+  display:flex;
+  align-items:center;
+}
+
+.mast-name{
+  font-family:'DM Serif Display',serif;
+  font-size:44px;
+  color:#F5F0E8;
+  line-height:1;
+  letter-spacing:-1px;
+}
+
+.mast-name i{
+  color:#E8401C;
+  font-style:italic;
+}
+
+.mast-right{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-end;
+  gap:4px;
+}
+
+.mast-sub{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  color:#6B5E48;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.mast-en{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:#A89880;
+  letter-spacing:1px;
+}
+
+/* ── TICKER STRIP ── */
+.ticker{
+  background:#E8401C;
+  padding:6px 36px;
+  display:flex;
+  gap:32px;
+  overflow:hidden;
+}
+
+.ticker-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.ticker-dot{
+  width:5px;
+  height:5px;
+  background:#fff;
+  border-radius:50%;
+  opacity:0.6;
+}
+
+.ticker-text{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:#fff;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+
+/* ── BIG SLOGAN ── */
+.slogan-block{
+  padding:40px 36px 0;
+  display:grid;
+  grid-template-columns:1fr 220px;
+  gap:24px;
+  border-bottom:1px solid #D4C9B5;
+  padding-bottom:32px;
+}
+
+.slogan-main{
+  font-family:'DM Serif Display',serif;
+  font-size:52px;
+  line-height:1.05;
+  letter-spacing:-1px;
+  color:#1A1208;
+}
+
+.slogan-main em{
+  color:#E8401C;
+  font-style:italic;
+}
+
+.slogan-side{
+  border-left:2px solid #D4C9B5;
+  padding-left:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:12px;
+}
+
+.slogan-side-line{
+  font-size:12px;
+  color:#7A6B54;
+  line-height:1.6;
+}
+
+.slogan-side-tag{
+  display:inline-block;
+  background:#1A1208;
+  color:#F5F0E8;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:1.5px;
+  padding:5px 12px;
+  width:fit-content;
+}
+
+/* ── SECTION HEADER ── */
+.sec-hd{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:20px 36px 0;
+  margin-bottom:0;
+}
+
+.sec-num{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:#E8401C;
+  letter-spacing:1px;
+}
+
+.sec-title{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:#9A8B74;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.divider{
+  height:1px;
+  background:#D4C9B5;
+  margin:16px 36px 0;
+}
+
+/* ── LOGO VARIATIONS ── */
+.logo-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:0;
+  border-top:1px solid #D4C9B5;
+  margin-top:16px;
+}
+
+.logo-cell{
+  padding:28px 24px;
+  border-right:1px solid #D4C9B5;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.logo-cell:last-child{border-right:none;}
+
+.logo-cell-label{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  color:#9A8B74;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.logo-v1{
+  font-family:'DM Serif Display',serif;
+  font-size:28px;
+  color:#1A1208;
+  letter-spacing:-0.5px;
+  line-height:1;
+}
+.logo-v1 span{color:#E8401C;font-style:italic;}
+
+.logo-v2{
+  background:#1A1208;
+  color:#F5F0E8;
+  font-family:'DM Serif Display',serif;
+  font-size:28px;
+  letter-spacing:-0.5px;
+  line-height:1;
+  padding:10px 14px;
+  display:inline-block;
+}
+.logo-v2 span{color:#E8401C;}
+
+.logo-v3{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-mark-v3{
+  width:40px;
+  height:40px;
+  background:#E8401C;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo-v3-text{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;
+  color:#1A1208;
+  line-height:1;
+}
+
+.logo-v3-sub{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:2px;
+  color:#9A8B74;
+  margin-top:3px;
+}
+
+/* ── COLOR PALETTE ── */
+.palette{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  margin-top:16px;
+  border-top:1px solid #D4C9B5;
+}
+
+.pal-item{
+  height:90px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:8px 12px;
+  border-right:1px solid rgba(0,0,0,0.05);
+}
+.pal-item:last-child{border-right:none;}
+
+.pal-name{
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:0.5px;
+  opacity:0.75;
+}
+.pal-hex{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  margin-top:2px;
+  opacity:0.85;
+}
+
+/* ── THREE PILLARS ── */
+.pillars{
+  display:grid;
+  grid-template-columns:2fr 1.5fr 1.5fr;
+  border-top:1px solid #D4C9B5;
+  margin-top:16px;
+}
+
+.pill-cell{
+  padding:24px 28px;
+  border-right:1px solid #D4C9B5;
+  position:relative;
+}
+
+.pill-cell:last-child{border-right:none;}
+
+.pill-n{
+  font-family:'DM Serif Display',serif;
+  font-size:64px;
+  line-height:1;
+  color:#E8E0D0;
+  position:absolute;
+  top:16px;
+  right:20px;
+  font-style:italic;
+}
+
+.pill-tag{
+  display:inline-block;
+  border:1px solid #1A1208;
+  font-family:'DM Mono',monospace;
+  font-size:8px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  padding:3px 8px;
+  margin-bottom:12px;
+  color:#1A1208;
+}
+
+.pill-title{
+  font-family:'DM Serif Display',serif;
+  font-size:24px;
+  color:#1A1208;
+  line-height:1.15;
+  margin-bottom:10px;
+  position:relative;
+  z-index:1;
+}
+
+.pill-title em{color:#E8401C;font-style:italic;}
+
+.pill-body{
+  font-size:12px;
+  color:#7A6B54;
+  line-height:1.65;
+  position:relative;
+  z-index:1;
+  max-width:220px;
+}
+
+/* ── CONTENT TAGS ── */
+.tags-section{
+  padding:20px 36px;
+  border-top:1px solid #D4C9B5;
+  margin-top:0;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.tag-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.tag-cat{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:1.5px;
+  color:#9A8B74;
+  text-transform:uppercase;
+  min-width:70px;
+}
+
+.tag-chip{
+  font-size:11px;
+  font-weight:500;
+  padding:4px 14px;
+  border:1px solid;
+}
+
+.chip-red{border-color:#E8401C;color:#E8401C;background:rgba(232,64,28,0.06);}
+.chip-dark{border-color:#1A1208;color:#1A1208;background:rgba(26,18,8,0.04);}
+.chip-warm{border-color:#9A6B20;color:#9A6B20;background:rgba(154,107,32,0.07);}
+
+/* ── PERSONA STRIP ── */
+.persona-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid #D4C9B5;
+  background:#1A1208;
+}
+
+.persona-cell{
+  padding:20px 24px;
+  border-right:1px solid #2E2416;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.persona-cell:last-child{border-right:none;}
+
+.persona-w{
+  font-family:'DM Serif Display',serif;
+  font-size:20px;
+  color:#F5F0E8;
+  font-style:italic;
+}
+
+.persona-desc{
+  font-size:11px;
+  color:#6B5E48;
+  line-height:1.5;
+}
+
+/* ── ID HANDLES ── */
+.handles{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-top:1px solid #D4C9B5;
+  margin-top:0;
+}
+
+.hd-cell{
+  padding:22px 28px;
+  border-right:1px solid #D4C9B5;
+}
+
+.hd-cell:last-child{border-right:none;}
+
+.hd-label{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  color:#9A8B74;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+
+.hd-id{
+  font-family:'DM Serif Display',serif;
+  font-size:26px;
+  color:#1A1208;
+  letter-spacing:-0.3px;
+}
+
+.hd-note{
+  font-size:11px;
+  color:#9A8B74;
+  margin-top:5px;
+}
+
+/* ── BOTTOM STRIP ── */
+.bottom{
+  background:#E8401C;
+  padding:16px 36px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:0;
+}
+
+.bottom-slogan{
+  font-family:'DM Serif Display',serif;
+  font-size:18px;
+  color:#fff;
+  font-style:italic;
+}
+
+.bottom-mono{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  color:rgba(255,255,255,0.5);
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+</style>
+
+<div class="root">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="mast-left">
+      <div class="mast-badge">自媒体<br>品牌</div>
+      <div class="mast-name">跃<i>迁</i></div>
+    </div>
+    <div class="mast-right">
+      <div class="mast-sub">个人成长 · 资源 · AI前沿</div>
+      <div class="mast-en">LEAP · Personal Brand Identity System</div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-item"><div class="ticker-dot"></div><div class="ticker-text">全网资源整合</div></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><div class="ticker-text">个人成长方法论</div></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><div class="ticker-text">AI前沿行业洞察</div></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><div class="ticker-text">认知升级</div></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><div class="ticker-text">工具测评</div></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><div class="ticker-text">效率系统</div></div>
+  </div>
+
+  <!-- SLOGAN BLOCK -->
+  <div class="slogan-block">
+    <div class="slogan-main">
+      普通人实现<em>跃迁</em>，<br>从这里开始。
+    </div>
+    <div class="slogan-side">
+      <div class="slogan-side-line">不贩卖焦虑，不制造幻觉。<br>只提供真正有用的资源、<br>经过验证的成长方法，<br>以及读得懂的AI前沿动态。</div>
+      <div class="slogan-side-tag">FOR EVERYDAY BUILDERS</div>
+    </div>
+  </div>
+
+  <!-- LOGO VARIATIONS -->
+  <div class="sec-hd"><div class="sec-num">01</div><div class="sec-title">Logo 字标变体</div></div>
+  <div class="logo-grid">
+    <div class="logo-cell">
+      <div class="logo-cell-label">主版 · 浅底</div>
+      <div style="flex:1;display:flex;align-items:center;">
+        <div>
+          <div class="logo-v1">跃<span>迁</span></div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:#9A8B74;letter-spacing:3px;margin-top:6px;">LEAP</div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-cell">
+      <div class="logo-cell-label">反版 · 深底</div>
+      <div style="flex:1;display:flex;align-items:center;background:#1A1208;margin:-14px;padding:14px;">
+        <div>
+          <div style="font-family:'DM Serif Display',serif;font-size:28px;color:#F5F0E8;letter-spacing:-0.5px;line-height:1;">跃<span style="color:#E8401C;font-style:italic;">迁</span></div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:#6B5E48;letter-spacing:3px;margin-top:6px;">LEAP</div>
+        </div>
+      </div>
+    </div>
+    <div class="logo-cell">
+      <div class="logo-cell-label">图文组合版</div>
+      <div style="flex:1;display:flex;align-items:center;">
+        <div class="logo-v3">
+          <div class="logo-mark-v3">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <polyline points="4,16 10,8 14,12 18,4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="18" cy="4" r="2.5" fill="#fff"/>
+            </svg>
+          </div>
+          <div>
+            <div class="logo-v3-text">跃迁</div>
+            <div class="logo-v3-sub">LEAP · PERSONAL MEDIA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOR PALETTE -->
+  <div class="sec-hd" style="margin-top:20px;"><div class="sec-num">02</div><div class="sec-title">品牌色彩系统</div></div>
+  <div class="palette" style="margin-top:16px;">
+    <div class="pal-item" style="background:#E8401C;">
+      <span class="pal-name" style="color:#4A1000;">烈焰红 · 主色</span>
+      <span class="pal-hex" style="color:#5C1800;">#E8401C</span>
+    </div>
+    <div class="pal-item" style="background:#1A1208;">
+      <span class="pal-name" style="color:#6B5E48;">墨夜 · 深底</span>
+      <span class="pal-hex" style="color:#7A6B54;">#1A1208</span>
+    </div>
+    <div class="pal-item" style="background:#F5F0E8;">
+      <span class="pal-name" style="color:#9A8B74;">羊皮纸 · 浅底</span>
+      <span class="pal-hex" style="color:#7A6B54;">#F5F0E8</span>
+    </div>
+    <div class="pal-item" style="background:#9A6B20;">
+      <span class="pal-name" style="color:#3D2A00;">琥珀 · 辅色</span>
+      <span class="pal-hex" style="color:#4A3300;">#9A6B20</span>
+    </div>
+    <div class="pal-item" style="background:#D4C9B5;">
+      <span class="pal-name" style="color:#5A4E3C;">沙石 · 边线</span>
+      <span class="pal-hex" style="color:#6B5E48;">#D4C9B5</span>
+    </div>
+    <div class="pal-item" style="background:#E8E0D0;">
+      <span class="pal-name" style="color:#7A6B54;">云灰 · 弱化</span>
+      <span class="pal-hex" style="color:#7A6B54;">#E8E0D0</span>
+    </div>
+  </div>
+
+  <!-- THREE PILLARS -->
+  <div class="sec-hd" style="margin-top:20px;"><div class="sec-num">03</div><div class="sec-title">内容三大支柱</div></div>
+  <div class="pillars">
+    <div class="pill-cell">
+      <div class="pill-n">I</div>
+      <div class="pill-tag">Resources</div>
+      <div class="pill-title">全网<em>资源</em><br>聚合分发</div>
+      <div class="pill-body">跨平台精选工具、课程、模板、电子书，用结构化整合替代你的无效搜索，每一份资源都经过亲测筛选。</div>
+    </div>
+    <div class="pill-cell">
+      <div class="pill-n">II</div>
+      <div class="pill-tag">Growth</div>
+      <div class="pill-title">个人成长<br><em>方法论</em></div>
+      <div class="pill-body">心智模型、效率框架与认知升级体系，可复用、可迁移，让每一次学习都产生复利。</div>
+    </div>
+    <div class="pill-cell">
+      <div class="pill-n">III</div>
+      <div class="pill-tag">AI Frontier</div>
+      <div class="pill-title">AI前沿<br><em>行业洞察</em></div>
+      <div class="pill-body">最新模型、工具测评与落地场景解读，用人能听懂的语言跟上AI时代的红利节奏。</div>
+    </div>
+  </div>
+
+  <!-- CONTENT TAGS -->
+  <div class="sec-hd" style="margin-top:20px;"><div class="sec-num">04</div><div class="sec-title">内容标签矩阵</div></div>
+  <div class="tags-section">
+    <div class="tag-row">
+      <div class="tag-cat">资源类</div>
+      <span class="tag-chip chip-red">资源合集</span>
+      <span class="tag-chip chip-red">工具推荐</span>
+      <span class="tag-chip chip-red">书单精选</span>
+      <span class="tag-chip chip-red">模板下载</span>
+      <span class="tag-chip chip-red">平台攻略</span>
+    </div>
+    <div class="tag-row">
+      <div class="tag-cat">成长类</div>
+      <span class="tag-chip chip-dark">思维模型</span>
+      <span class="tag-chip chip-dark">时间管理</span>
+      <span class="tag-chip chip-dark">认知升级</span>
+      <span class="tag-chip chip-dark">目标系统</span>
+      <span class="tag-chip chip-dark">习惯设计</span>
+    </div>
+    <div class="tag-row">
+      <div class="tag-cat">AI类</div>
+      <span class="tag-chip chip-warm">模型动态</span>
+      <span class="tag-chip chip-warm">工具测评</span>
+      <span class="tag-chip chip-warm">Prompt技巧</span>
+      <span class="tag-chip chip-warm">行业应用</span>
+      <span class="tag-chip chip-warm">前沿洞察</span>
+    </div>
+  </div>
+
+  <!-- PERSONA STRIP -->
+  <div class="sec-hd"><div class="sec-num">05</div><div class="sec-title">人设调性关键词</div></div>
+  <div class="divider"></div>
+  <div class="persona-strip">
+    <div class="persona-cell">
+      <div class="persona-w">务实</div>
+      <div class="persona-desc">每个方法都来自<br>真实的使用经验</div>
+    </div>
+    <div class="persona-cell">
+      <div class="persona-w">前沿</div>
+      <div class="persona-desc">AI浪潮第一线的<br>第一手感知与判断</div>
+    </div>
+    <div class="persona-cell">
+      <div class="persona-w">克制</div>
+      <div class="persona-desc">不贩卖焦虑<br>不制造过度期待</div>
+    </div>
+    <div class="persona-cell">
+      <div class="persona-w">共生</div>
+      <div class="persona-desc">与读者一起成长<br>不是居高临下的输出</div>
+    </div>
+  </div>
+
+  <!-- HANDLES -->
+  <div class="sec-hd" style="margin-top:0;padding-top:20px;"><div class="sec-num">06</div><div class="sec-title">账号矩阵 ID</div></div>
+  <div class="divider"></div>
+  <div class="handles" style="margin-top:0;">
+    <div class="hd-cell">
+      <div class="hd-label">中文平台主ID</div>
+      <div class="hd-id">@跃迁研究所</div>
+      <div class="hd-note">微信公众号 / 小红书 / 抖音 / B站</div>
+    </div>
+    <div class="hd-cell">
+      <div class="hd-label">国际平台 / 英文ID</div>
+      <div class="hd-id">@LeapStudy</div>
+      <div class="hd-note">X · YouTube · LinkedIn · Newsletter</div>
+    </div>
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="bottom">
+    <div class="bottom-slogan">每一次跃迁，都从一个决定开始。</div>
+    <div class="bottom-mono">Brand Identity v2.0 · 2025</div>
+  </div>
+
+</div>
