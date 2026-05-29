@@ -3,292 +3,298 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>慕容子诚 | 官方网站入口</title>
-  <meta name="description" content="慕容子诚的个人创意空间。专注于和平精英画质优化、界面美化资源文件分享，提供最详尽的游戏修改与桌面美化教程，收录高清原创及定制壁纸，搭载极简巨型文字排版与个人特调音乐播放器。">
+  <title>慕容子诚 | 官方网站 & 3D粒子音乐空间</title>
+  <meta name="description" content="慕容子诚的个人创意空间与音乐空间。专注于和平精英画质优化、界面美化资源文件分享，提供最详尽的游戏修改与桌面美化教程，搭载全屏实时 3D 粒子音频律动引擎与极客播放器列表。">
+  <meta name="keywords" content="慕容子诚, 慕容子诚个人网站, 3D粒子, 音频律动, 游戏配置, 壁纸下载, 音乐播放器, 桌面定制">
+  <meta name="author" content="慕容子诚">
   
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Orbitron:wght@500;700;900&family=Inter:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 矢量图标 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- 本地样式表 -->
+  <link rel="stylesheet" href="css/style.css">
   
-  <!-- 引入本地 Three.js 库 (v0.160.0，支持 iridescence 薄膜干涉折射) -->
+  <!-- 引入本地 Three.js 库 (v0.160.0) -->
   <script src="js/three.min.js"></script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body, html {
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      background-color: #000000;
-      font-family: 'Orbitron', 'Inter', -apple-system, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    /* WebGL 画布层 */
-    #landing-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      cursor: pointer;
-    }
-
-    /* 底部进入空间入口 */
-    .landing-enter {
-      position: absolute;
-      bottom: 8vh;
-      z-index: 10;
-      text-align: center;
-      width: 100%;
-      pointer-events: none;
-      animation: fadeInBtn 2s ease-out;
-    }
-
-    #enter-btn {
-      display: inline-block;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      color: rgba(255, 255, 255, 0.45);
-      text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 12px 32px;
-      border-radius: 30px;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-      text-transform: uppercase;
-      cursor: pointer;
-      pointer-events: auto;
-      background: rgba(5, 5, 10, 0.4);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    }
-
-    #enter-btn:hover {
-      color: #00f2fe;
-      border-color: #00f2fe;
-      box-shadow: 0 0 20px rgba(0, 242, 254, 0.35);
-      transform: translateY(-2px);
-    }
-    
-    #enter-btn:active {
-      transform: translateY(1px);
-    }
-
-    @keyframes fadeInBtn {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
 </head>
 <body>
 
-  <!-- WebGL 渲染 Canvas -->
-  <canvas id="landing-canvas"></canvas>
+  <!-- WebGL Canvas 粒子交互背景 (全屏固定层) -->
+  <canvas id="bg-canvas"></canvas>
 
-  <!-- 底部进入入口 -->
-  <div class="landing-enter">
-    <a href="main.html" id="enter-btn">ENTER SPACE / 进入空间</a>
+  <!-- 全局网页容器 -->
+  <div class="global-wrapper">
+
+    <!-- ==========================================================================
+         顶部固定导航栏 (Logo & Menu & Dimension Engine)
+         ========================================================================== -->
+    <header class="global-header">
+      <div class="brand-logo" id="logo-btn" title="点击返回顶部播放器">MURONG</div>
+      
+      <!-- 全局 3D 维度切换按钮 -->
+      <div class="floating-engine-control" id="engine-control">
+        <span class="floating-engine-label"><i class="fas fa-cubes"></i> 3D 粒子维度</span>
+        <button class="floating-engine-btn active" data-shape="0" title="切换星盘形态">星盘</button>
+        <button class="floating-engine-btn" data-shape="1" title="切换立方体阵列">立方体</button>
+        <button class="floating-engine-btn" data-shape="2" title="切换涡流隧道">涡流</button>
+        <button class="floating-engine-btn" data-shape="3" title="切换波动面">波动</button>
+        <button class="floating-engine-btn" data-shape="4" title="切换神经网络">网络</button>
+      </div>
+
+      <!-- 桌面端导航链接 -->
+      <nav class="desktop-nav" aria-label="主导航">
+        <a href="#player-hero" class="nav-link active" data-target="player-hero">空间</a>
+        <a href="#about" class="nav-link" data-target="about">关于</a>
+        <a href="#resources" class="nav-link" data-target="resources">资源</a>
+        <a href="#tutorials" class="nav-link" data-target="tutorials">教程</a>
+        <a href="#wallpapers" class="nav-link" data-target="wallpapers">壁纸</a>
+        <a href="#contact" class="nav-link" data-target="contact">联系</a>
+      </nav>
+
+      <!-- 移动端菜单按钮 -->
+      <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="打开菜单">
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </header>
+
+    <!-- 移动端抽屉式导航面板 -->
+    <div class="mobile-nav-panel" id="mobile-nav-drawer">
+      <nav class="mobile-nav-list" aria-label="移动端主导航">
+        <a href="#player-hero" class="mobile-nav-link" data-target="player-hero">沉浸空间</a>
+        <a href="#about" class="mobile-nav-link" data-target="about">关于作者</a>
+        <a href="#resources" class="mobile-nav-link" data-target="resources">美化资源</a>
+        <a href="#tutorials" class="mobile-nav-link" data-target="tutorials">实用教程</a>
+        <a href="#wallpapers" class="mobile-nav-link" data-target="wallpapers">精美壁纸</a>
+        <a href="#contact" class="mobile-nav-link" data-target="contact">联系作者</a>
+      </nav>
+    </div>
+
+    <!-- ==========================================================================
+         单页主内容流
+         ========================================================================== -->
+    <main class="page-content-flow">
+
+      <!-- Section 1: Hero Player (沉浸式极客控制台播放器第一屏) -->
+      <section id="player-hero" class="scroll-section">
+        <div class="hero-player-container">
+          
+          <!-- 精致发光音乐播放控制面板 -->
+          <div class="music-console-panel" id="console-panel-trigger">
+            
+            <!-- 激活交互控制提示遮罩（移动端防静音触摸激活引导） -->
+            <div class="player-action-overlay" id="player-prompt-overlay">
+              <div class="prompt-icon"><i class="fas fa-play"></i></div>
+              <div class="prompt-title">CLICK TO START</div>
+              <div class="prompt-subtitle">点击激活 3D 粒子律动空间</div>
+            </div>
+
+            <!-- 歌曲元数据 -->
+            <div class="music-meta-info">
+              <h1 class="music-title" id="song-display-title">等待激活...</h1>
+              <p class="music-artist" id="song-display-artist">请点击此控制面板启动音频通道</p>
+            </div>
+
+            <!-- 极细音乐进度条 -->
+            <div class="console-progress-wrapper" id="console-progress-bar" title="点击调整播放进度">
+              <div class="console-progress-fill" id="console-progress-fill"></div>
+              <div class="console-progress-handle" id="console-progress-handle"></div>
+            </div>
+            <div class="console-time-row">
+              <span id="time-current">00:00</span>
+              <span id="time-total">00:00</span>
+            </div>
+
+            <!-- 控制按钮组 -->
+            <div class="console-controls-row">
+              <button class="console-btn" id="loop-mode-btn" title="列表循环"><i class="fas fa-repeat"></i></button>
+              <button class="console-btn media-step" id="prev-song-btn" title="上一首"><i class="fas fa-step-backward"></i></button>
+              <button class="console-btn-play" id="play-pause-btn" title="播放 / 暂停">
+                <i class="fas fa-play" id="play-icon-state"></i>
+              </button>
+              <button class="console-btn media-step" id="next-song-btn" title="下一首"><i class="fas fa-step-forward"></i></button>
+              <button class="console-btn" id="visualizer-toggle-btn" title="形态自适应/锁死状态"><i class="fas fa-wand-magic-sparkles"></i></button>
+              <button class="console-btn active-immersive" id="immersive-mode-btn" title="沉浸模式 (自动隐藏)"><i class="fas fa-eye-slash"></i></button>
+            </div>
+
+            <!-- 播放列表区域 (歌曲列表选项) -->
+            <div class="playlist-wrapper">
+              <div class="playlist-header">// 歌曲列表</div>
+              <div class="playlist-container" id="playlist-container">
+                <!-- 由 JS 动态注入 -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 粒子全屏沉浸状态下的精致唤醒悬浮球 -->
+        <div class="console-wakeup-wrapper" id="console-wakeup-btn" title="唤醒控制面板">
+          <div class="wakeup-bubble-label">唤醒控制面板 / SHOW CONSOLE</div>
+          <div class="wakeup-circle-icon"><i class="fas fa-sliders"></i></div>
+        </div>
+
+        <!-- 滚动引导 -->
+        <div class="scroll-discover-hint" id="scroll-discover-hint">
+          <span class="hint-text">向下滚动，探索空间</span>
+          <div class="hint-arrow"><i class="fas fa-chevron-down"></i></div>
+        </div>
+      </section>
+
+      <!-- Section 2: ABOUT (关于作者) -->
+      <section id="about" class="scroll-section content-section">
+        <div class="section-title-wrapper">
+          <span class="section-tag">// 创作者 & 开发者</span>
+          <h2 class="section-title">关于作者</h2>
+        </div>
+        <div class="about-grid-layout">
+          <div class="about-card-left">
+            <h3 class="about-name">慕容子诚</h3>
+            <p class="about-bio">
+              追寻极致流畅的游戏画质与极致科幻的桌面视觉。在这里，与你分享我收集与打磨的精美资源，探索无尽的创意维度。
+            </p>
+            <p class="about-detail-p">
+              致力于和平精英画质配置文件特调、扁平化游戏 UI 设计，以及基于 Kwgt 的 Android 高级桌面美化定制。本站搭载全屏 3D WebGL 实时音频粒子律动引擎，将声音与光影在三维维度中完美耦合。
+            </p>
+            <blockquote class="about-quote">
+              “声音是无形的粒子，粒子是看得见的声音。”
+            </blockquote>
+          </div>
+          <div class="about-stats-right">
+            <div class="stat-box">
+              <span class="stat-number" id="count-fps">120</span>
+              <span class="stat-label">帧率极致解锁</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number" id="count-users">50K+</span>
+              <span class="stat-label">美化包用户选择</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number" id="count-papers">3</span>
+              <span class="stat-label">定制高清壁纸收录</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: RESOURCES (资源整理) -->
+      <section id="resources" class="scroll-section content-section">
+        <div class="section-title-wrapper">
+          <span class="section-tag">// 美化包 / 配置文件 / 优化补丁</span>
+          <h2 class="section-title">美化资源</h2>
+        </div>
+        <div class="resource-grid-container" id="resource-grid">
+          <!-- 动态由 JS 渲染，支持 3D 鼠标感知倾斜 -->
+        </div>
+      </section>
+
+      <!-- Section 4: TUTORIALS (实用教程) -->
+      <section id="tutorials" class="scroll-section content-section">
+        <div class="section-title-wrapper">
+          <span class="section-tag">// 新手入门 / 进阶参数 / 桌面定制</span>
+          <h2 class="section-title">实用教程</h2>
+        </div>
+        <div class="tutorial-list-container" id="tutorial-grid">
+          <!-- 动态由 JS 渲染，点击触发富文本阅读模态框 -->
+        </div>
+      </section>
+
+      <!-- Section 5: WALLPAPERS (精美壁纸) -->
+      <section id="wallpapers" class="scroll-section content-section">
+        <div class="section-title-wrapper">
+          <span class="section-tag">// 高对比度 / 赛博深空 / 仙逆主题</span>
+          <h2 class="section-title">精美壁纸</h2>
+        </div>
+        <div class="wallpaper-grid-container" id="wallpaper-grid">
+          <!-- 动态由 JS 渲染，带下载与灯箱预览 -->
+        </div>
+      </section>
+
+      <!-- Section 6: CONTACT (联系反馈) -->
+      <section id="contact" class="scroll-section content-section">
+        <div class="section-title-wrapper">
+          <span class="section-tag">// 保持联系 / 意见反馈 / 商务合作</span>
+          <h2 class="section-title">联系作者</h2>
+        </div>
+        
+        <div class="contact-box-wrapper">
+          <!-- 反馈表单 -->
+          <div class="contact-form-side">
+            <p class="contact-notice">
+              如果您对本站的美化资源、画质配置文件有任何疑问，或想向我提交反馈，欢迎通过下方邮箱或加入我们的 QQ 交流群进行联系。
+            </p>
+            <h3 class="contact-label-title">KEEP IN TOUCH</h3>
+            <div class="feedback-input-row">
+              <input type="email" placeholder="输入您的邮箱" class="feedback-input" id="feedback-email-input">
+              <button class="feedback-submit-btn" id="feedback-send-btn" aria-label="提交反馈">
+                <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+            <div class="feedback-agreement">
+              <input type="checkbox" id="privacy-agreement-checkbox" class="agreement-checkbox">
+              <label for="privacy-agreement-checkbox" class="agreement-label">我已阅读并同意本空间的使用声明与个人隐私规范条款。</label>
+            </div>
+          </div>
+
+          <!-- 联络明细 -->
+          <div class="contact-details-side">
+            <h3 class="contact-label-title">COOPERATION DETAILS</h3>
+            <ul class="cooperation-list">
+              <li>官方邮箱: <strong>murongzicheng@example.com</strong></li>
+              <li>QQ粉丝群一: <strong>788544102</strong></li>
+              <li>QQ粉丝群二: <strong>902114785</strong></li>
+              <li>工作时间: 周一至周五 10:00 - 18:00 (通常在 24 小时内答复)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 页脚极细信息 -->
+        <footer class="footer-details-wrapper">
+          <div class="footer-top-row">
+            <div class="footer-logo">MURONG</div>
+            <p class="footer-slogan">RTX VSR / WebGL 3D PARTICLE AUDIO REACTOR / EST. 2026</p>
+          </div>
+          <div class="footer-bottom-row">
+            <p class="copyright-text">MURONG ZICHENG SPACE &copy; 2026. ALL RIGHTS RESERVED. Powered by Antigravity.</p>
+          </div>
+        </footer>
+      </section>
+
+    </main>
+
+    <!-- ==========================================================================
+         磨砂玻璃悬浮模态框 (Modal) - 教程富文本阅读器
+         ========================================================================== -->
+    <div class="modal-wrapper" id="text-modal">
+      <div class="modal-backdrop" id="text-modal-backdrop"></div>
+      <article class="modal-card">
+        <button class="modal-close-btn" id="text-modal-close" aria-label="关闭">&times; [ 关闭 ]</button>
+        <div class="modal-header">
+          <span class="modal-category-badge" id="modal-badge-text">分类</span>
+          <h2 class="modal-main-title" id="modal-title-text">标题</h2>
+        </div>
+        <div class="modal-body-content" id="modal-body-text">
+          <!-- 动态注入 -->
+        </div>
+      </article>
+    </div>
+
+    <!-- ==========================================================================
+         磨砂玻璃悬浮模态框 (Modal) - 壁纸大图灯箱预览
+         ========================================================================== -->
+    <div class="modal-wrapper" id="image-modal">
+      <div class="modal-backdrop" id="image-modal-backdrop"></div>
+      <div class="modal-card lightbox-card">
+        <button class="modal-close-btn" id="image-modal-close" aria-label="关闭">&times; [ 关闭 ]</button>
+        <img class="lightbox-image" id="lightbox-img-element" src="" alt="壁纸大图预览">
+        <div class="lightbox-caption" id="lightbox-caption-text">壁纸名称</div>
+      </div>
+    </div>
+
   </div>
 
-  <script>
-    // ==========================================================================
-    // 3D 玻璃环与中文文字混合排版逻辑 (Torus Glass Refraction)
-    // ==========================================================================
-
-    let scene, camera, renderer, textMesh, torus;
-    const canvas = document.getElementById('landing-canvas');
-
-    const mouse = { x: 0, y: 0 };
-    const targetMouse = { x: 0, y: 0 };
-
-    function init() {
-      if (typeof THREE === 'undefined') {
-        console.warn("Three.js 库未成功加载。");
-        return;
-      }
-
-      // 1. 初始化场景
-      scene = new THREE.Scene();
-
-      // 2. 初始化相机
-      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      
-      function adjustCameraZ() {
-        const aspect = window.innerWidth / window.innerHeight;
-        // 如果是手机竖屏，拉远相机防止文字和玻璃环超出两侧视口
-        if (aspect < 1.0) {
-          camera.position.z = 5.0 / aspect;
-        } else {
-          camera.position.z = 5.0;
-        }
-      }
-      adjustCameraZ();
-
-      // 3. 初始化渲染器
-      renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        antialias: true,
-        alpha: true // 允许透明背景
-      });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      // 4. 材质反射光源设计
-      const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
-      scene.add(ambientLight);
-
-      // 上方强白光
-      const pointLight1 = new THREE.PointLight(0xffffff, 15, 100);
-      pointLight1.position.set(-2, 3.5, 3);
-      scene.add(pointLight1);
-
-      // 下方辅助光
-      const pointLight2 = new THREE.PointLight(0xffffff, 10, 100);
-      pointLight2.position.set(2, -3.5, 3);
-      scene.add(pointLight2);
-
-      // 霓虹紫光 (渲染玻璃炫酷的反光折射色调)
-      const pointLight3 = new THREE.PointLight(0xbd00ff, 20, 100);
-      pointLight3.position.set(2, 2, 2);
-      scene.add(pointLight3);
-
-      // 霓虹蓝光
-      const pointLight4 = new THREE.PointLight(0x00f2fe, 20, 100);
-      pointLight4.position.set(-2, -2, 2);
-      scene.add(pointLight4);
-
-      // 5. 动态生成 2D 文本画布，并映射为 3D 平面材质
-      const textCanvas = document.createElement('canvas');
-      textCanvas.width = 2048;
-      textCanvas.height = 512;
-      const ctx = textCanvas.getContext('2d');
-
-      // 绘制白字中文
-      ctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 220px Montserrat, Inter, "Segoe UI", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      
-      // 核心落地页字样
-      ctx.fillText('慕容子诚', 1024, 256);
-
-      // 转换为纹理
-      const textTexture = new THREE.CanvasTexture(textCanvas);
-      textTexture.minFilter = THREE.LinearFilter; // 平滑抗锯齿缩放
-      
-      // 创建文本网格
-      const textGeometry = new THREE.PlaneGeometry(4.8, 1.2);
-      
-      // CRITICAL: transparent 设为 false，使用 alphaTest 剔除背景。
-      // 这能使文字作为不透明物体优先渲染，从而能被 glass torus 材质的 transmission 折射贴图完美捕捉并折射！
-      const textMaterial = new THREE.MeshBasicMaterial({
-        map: textTexture,
-        transparent: false,
-        alphaTest: 0.5,
-        side: THREE.DoubleSide
-      });
-      textMesh = new THREE.Mesh(textGeometry, textMaterial);
-      textMesh.position.set(0, 0, -0.05); // 稍微往后拉，作为折射背景
-      scene.add(textMesh);
-
-      // 6. 创建 3D 物理透明玻璃圆环 (MeshPhysicalMaterial)
-      const torusGeometry = new THREE.TorusGeometry(1.1, 0.42, 120, 80);
-      const torusMaterial = new THREE.MeshPhysicalMaterial({
-        metalness: 0.0,
-        roughness: 0.02,
-        iridescence: 1.0,                // 极光薄膜折射
-        iridescenceIOR: 1.6,             // 极光折射率
-        iridescenceThicknessRange: [100, 380],
-        transmission: 1.0,               // 100% 透光率
-        ior: 1.45,                       // 玻璃折射比率
-        thickness: 0.9,                  // 折射厚度
-        transparent: true,
-        opacity: 1.0
-      });
-
-      torus = new THREE.Mesh(torusGeometry, torusMaterial);
-      torus.position.set(0, 0, 0.22); // 悬浮偏向相机一侧，产生前后交织的深度遮挡和折射
-      scene.add(torus);
-
-      // 7. 绑定鼠标和视口缩放事件
-      window.addEventListener('mousemove', (e) => {
-        targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-        targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-      });
-
-      window.addEventListener('touchmove', (e) => {
-        targetMouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
-        targetMouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
-      }, { passive: true });
-
-      // 点击网页任意地方跳转到 main.html 资源管理页面，操作极为便利
-      canvas.addEventListener('click', () => {
-        window.location.href = 'main.html';
-      });
-
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        adjustCameraZ();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-
-      // 8. 动画渲染循环
-      const clock = new THREE.Clock();
-
-      function animate() {
-        requestAnimationFrame(animate);
-
-        const elapsedTime = clock.getElapsedTime();
-
-        // 玻璃环三维自转
-        if (torus) {
-          torus.rotation.x = elapsedTime * 0.42;
-          torus.rotation.y = elapsedTime * 0.28;
-        }
-
-        // 鼠标惯性物理插值
-        mouse.x += (targetMouse.x - mouse.x) * 0.05;
-        mouse.y += (targetMouse.y - mouse.y) * 0.05;
-
-        // 相机/场景轻微偏移，随鼠标产生 3D Parallax 视差晃动感
-        if (torus && textMesh) {
-          scene.rotation.y = mouse.x * 0.22;
-          scene.rotation.x = -mouse.y * 0.22;
-          
-          // 轻微水母式悬浮呼吸浮动效果
-          const breathing = Math.sin(elapsedTime * 1.5) * 0.05;
-          torus.position.y = breathing;
-          textMesh.position.y = breathing;
-        }
-
-        renderer.render(scene, camera);
-      }
-
-      animate();
-    }
-
-    // 页面完全加载后启动 WebGL
-    window.addEventListener('DOMContentLoaded', init);
-  </script>
+  <!-- 引入主交互逻辑 JS -->
+  <script src="js/script.js"></script>
 </body>
 </html>

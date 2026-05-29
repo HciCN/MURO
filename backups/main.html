@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>慕容子诚 | 官方网站空间</title>
+  <meta name="description" content="慕容子诚的个人创意空间。专注于和平精英画质优化、界面美化资源文件分享，提供最详尽的游戏修改与桌面美化教程，收录高清原创及定制壁纸，搭载极简巨型文字排版与个人特调音乐播放器。">
+  <meta name="keywords" content="慕容子诚, 慕容子诚个人网站, 和平精英美化, 画质解锁, 游戏配置, 壁纸下载, 音乐播放器, 桌面定制">
+  <meta name="author" content="慕容子诚">
+  
+  <!-- Font Awesome 矢量图标 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 本地样式表 -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- 引入本地 Three.js 库 (v0.160.0，支持 iridescence 薄膜干涉折射) -->
+  <script src="js/three.min.js"></script>
+</head>
+<body>
+
+  <!-- WebGL Canvas 粒子交互背景 (固定层) -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ==========================================================================
+       原生阻尼滚动高度占位层 (Scroll Height Spacer)
+       ========================================================================== -->
+  <div class="scroll-height-spacer" id="scroll-spacer"></div>
+
+  <!-- ==========================================================================
+       顶部固定导航栏 (Logo & Menu & Dimension Engine)
+       ========================================================================== -->
+  <header class="global-header">
+    <a href="index.html" class="brand-logo" title="点击返回主落地迎宾页">MURONG</a>
+    
+    <!-- 全局 3D 维度切换按钮 (悬浮在右上角) -->
+    <div class="floating-engine-control" id="engine-control">
+      <span class="floating-engine-label">3D 粒子维度</span>
+      <button class="floating-engine-btn active" data-shape="0" title="切换星盘形态">星盘</button>
+      <button class="floating-engine-btn" data-shape="1" title="切换立方体阵列">立方体</button>
+      <button class="floating-engine-btn" data-shape="2" title="切换涡流隧道">涡流</button>
+      <button class="floating-engine-btn" data-shape="3" title="切换波动面">波动</button>
+      <button class="floating-engine-btn" data-shape="4" title="切换神经网络">网络</button>
+    </div>
+
+    <!-- 菜单开关 -->
+    <button class="menu-btn" id="menu-btn">菜单</button>
+  </header>
+
+  <!-- ==========================================================================
+       左侧工业风侧边导航面板 (Lateral Info Menu) - 仿 Sidewave 侧边索引导航
+       ========================================================================== -->
+  <aside class="lateral-info-panel" id="lateral-panel">
+    <div class="lateral-panel-inner">
+      <div class="lateral-header">
+        <div class="scene-prefix">// 当前场景状态</div>
+        <h2 class="scene-title" id="lateral-scene-title">首页</h2>
+      </div>
+      <p class="scene-desc" id="lateral-scene-desc">
+        欢迎来到慕容子诚的个人创意空间。这里融合了极致高刷画质优化、界面美化补丁与极客桌面美化艺术。
+      </p>
+      
+      <!-- 动态小节子锚点导航 -->
+      <nav class="lateral-sub-nav" aria-label="侧边栏子导航">
+        <ul id="lateral-anchors-list">
+          <!-- 动态注入 -->
+        </ul>
+      </nav>
+      
+      <!-- 下一小节提示链接 -->
+      <div class="lateral-footer">
+        <a href="#next" class="next-section-link" id="lateral-next-btn">向下滚动探索空间</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       左下角极细发光晶莹音乐播放器
+       ========================================================================== -->
+  <div class="mini-music-player" id="mini-player">
+    <div class="player-meta">
+      <div class="mini-disc" id="mini-disc"></div>
+      <div class="track-details">
+        <div class="mini-track-title" id="track-name">加载中...</div>
+        <div class="mini-track-artist" id="track-artist">慕容子诚精选</div>
+      </div>
+    </div>
+    <div class="player-controls-row">
+      <button class="player-btn-text play-state" id="play-btn">播放</button>
+      <button class="player-btn-text" id="next-btn">下一首</button>
+      <button class="player-btn-text" id="loop-btn">列表循环</button>
+      <!-- 迷你发光进度条 -->
+      <div class="mini-progress-bar" id="progress-bar">
+        <div class="mini-progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       全屏单小节滚动页面固定视区 (Fixed Section Wrapper)
+       ========================================================================== -->
+  <main class="scroll-section-wrapper">
+    
+    <!-- Section 1: HOME -->
+    <section id="home" class="scroll-section" data-frame-start="0" data-frame-end="1000">
+      <div class="home-content-box scroll-anim-item">
+        <div class="home-tagline">// 创作者 & 开发者</div>
+        <h1 class="home-title">慕容子诚</h1>
+        <p class="home-bio">
+          追寻极致流畅的游戏画质与极致科幻的桌面视觉。在这里，与你分享我收集与打磨的精美资源，探索无尽的创意维度。
+        </p>
+        <p class="home-sub-tag">
+          声波实时律动粒子系统 • 2026
+        </p>
+      </div>
+
+      <!-- 头像与光晕已被移除，此处保持纯净粒子展示区 -->
+
+      <div class="scroll-discover">向下滚动，探索空间</div>
+    </section>
+
+    <!-- Section 2: RESOURCES -->
+    <section id="resources" class="scroll-section" data-frame-start="1200" data-frame-end="2200">
+      <div class="section-title-wrapper scroll-anim-item">
+        <span class="section-tag">// 美化包 / 配置文件 / 优化补丁</span>
+        <h2 class="section-title">美化资源</h2>
+      </div>
+      <div class="resource-grid scroll-anim-item">
+        <!-- 动态由 JS 渲染 -->
+      </div>
+    </section>
+
+    <!-- Section 3: TUTORIALS -->
+    <section id="tutorials" class="scroll-section" data-frame-start="2400" data-frame-end="3400">
+      <div class="section-title-wrapper scroll-anim-item">
+        <span class="section-tag">// 新手入门 / 进阶参数 / 桌面定制</span>
+        <h2 class="section-title">实用教程</h2>
+      </div>
+      <div class="tutorial-grid scroll-anim-item">
+        <!-- 动态由 JS 渲染 -->
+      </div>
+    </section>
+
+    <!-- Section 4: WALLPAPERS -->
+    <section id="wallpapers" class="scroll-section" data-frame-start="3600" data-frame-end="4600">
+      <div class="section-title-wrapper scroll-anim-item">
+        <span class="section-tag">// 高对比度 / 赛博深空 / 仙逆主题</span>
+        <h2 class="section-title">精美壁纸</h2>
+      </div>
+      <div class="wallpaper-grid scroll-anim-item">
+        <!-- 动态由 JS 渲染 -->
+      </div>
+    </section>
+
+    <!-- Section 5: CONTACT -->
+    <section id="contact" class="scroll-section" data-frame-start="4800" data-frame-end="6000">
+      <div class="section-title-wrapper scroll-anim-item">
+        <span class="section-tag">// 保持联系 / 意见反馈 / 商务合作</span>
+        <h2 class="section-title">联系作者</h2>
+      </div>
+      
+      <div class="contact-container scroll-anim-item">
+        <!-- 左半：输入框与说明 -->
+        <div class="contact-form-side">
+          <p class="contact-intro-text">
+            如果您对本站的美化资源、画质配置文件有任何疑问，或想向我提交反馈，欢迎通过下方邮箱或加入我们的 QQ 交流群进行联系。
+          </p>
+          
+          <h3 class="form-title">KEEP IN TOUCH</h3>
+          <div class="input-row">
+            <input type="email" placeholder="YOUR EMAIL" class="input-field" id="feedback-email">
+            <button class="send-btn" id="feedback-submit" aria-label="提交邮箱">
+              <i class="fas fa-arrow-right" style="font-size: 10px;"></i>
+            </button>
+          </div>
+          <div class="privacy-row">
+            <input type="checkbox" id="privacy-check" class="privacy-check">
+            <label for="privacy-check" class="privacy-label">我已阅读并同意本空间的使用声明与个人隐私规范条款。</label>
+          </div>
+        </div>
+
+        <!-- 右半：联系卡 -->
+        <div class="contact-info-side">
+          <h3 class="info-title">COOPERATION DETAILS</h3>
+          <ul class="info-list">
+            <li>官方邮箱: <strong>murongzicheng@example.com</strong></li>
+            <li>QQ粉丝群一: <strong>788544102</strong></li>
+            <li>QQ粉丝群二: <strong>902114785</strong></li>
+            <li>工作时间: 周一至周五 10:00 - 18:00 (通常在 24 小时内答复)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 页脚极细信息 -->
+      <footer class="footer-text scroll-anim-item">
+        MURONG ZICHENG SPACE &copy; 2026. ALL RIGHTS RESERVED.<br>
+        RTX VSR / WebGL PARTICLE AUDIO REACTOR / EST. 2026
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       全屏下拉式巨字导航菜单 (Menu Overlay Panel)
+       ========================================================================== -->
+  <div class="menu-overlay-panel" id="menu-panel">
+    <!-- 背景极光特效容器 -->
+    <div class="menu-iridescent-glow" id="menu-glow"></div>
+    <button class="menu-close-btn" id="menu-close-btn">[ 关闭 ]</button>
+    
+    <div class="menu-panel-content">
+      <nav aria-label="主菜单导航">
+        <ul class="menu-nav-list">
+          <li class="menu-nav-item" data-index="0">
+            <a class="menu-nav-link active" data-target="0">首页</a>
+          </li>
+          <li class="menu-nav-item" data-index="1">
+            <a class="menu-nav-link" data-target="1500">美化资源</a>
+          </li>
+          <li class="menu-nav-item" data-index="2">
+            <a class="menu-nav-link" data-target="2900">实用教程</a>
+          </li>
+          <li class="menu-nav-item" data-index="3">
+            <a class="menu-nav-link" data-target="4100">精美壁纸</a>
+          </li>
+          <li class="menu-nav-item" data-index="4">
+            <a class="menu-nav-link" data-target="5400">联系作者</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- 菜单右侧辅助说明 -->
+      <div class="menu-aside-info">
+        <div class="menu-aside-tagline">MURONG ZICHENG DIGITAL SPACE</div>
+        <div class="menu-aside-address">
+          DEVELOPED BY MURONG ZICHENG<br>
+          SPECIAL BEAUTY & OPTIMIZATION CONFIGS<br>
+          QQ GROUPS: 788544102 / 902114785
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       磨砂玻璃悬浮模态框 (Modal) - 教程富文本阅读器
+       ========================================================================== -->
+  <div class="modal" id="text-modal">
+    <div class="modal-overlay"></div>
+    <article class="modal-wrapper">
+      <button class="modal-close" aria-label="关闭">&times; [ 关闭 ]</button>
+      <div class="modal-header">
+        <span class="modal-tag">分类</span>
+        <h2 class="modal-title">标题</h2>
+      </div>
+      <div class="modal-body">
+        <!-- 动态注入 -->
+      </div>
+    </article>
+  </div>
+
+  <!-- ==========================================================================
+       磨砂玻璃悬浮模态框 (Modal) - 壁纸大图灯箱预览
+       ========================================================================== -->
+  <div class="modal" id="image-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-wrapper lightbox-wrapper">
+      <button class="modal-close" aria-label="关闭">&times; [ 关闭 ]</button>
+      <img class="lightbox-img" src="" alt="大图预览">
+      <div class="lightbox-caption">壁纸名称</div>
+    </div>
+  </div>
+
+  <!-- 主逻辑脚本 -->
+  <script src="js/script.js"></script>
+</body>
+</html>

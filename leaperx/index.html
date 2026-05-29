@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>跃迁者 / LeaperX - 点燃星火，行动跃迁</title>
+  <meta name="description" content="LeaperX 跃迁者是一个致力于探寻AI前沿、赋能个人成长与沉淀高效工具资源的极客创意空间。点燃星火，行动跃迁。Learn to Leap，梦想起步，即刻跃迁。">
+  <meta name="keywords" content="LeaperX, 跃迁者, AI前沿, 个人成长, 工具资源, 效率工具, 梦想起步, 即刻跃迁">
+  <meta name="author" content="LeaperX Team">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Orbitron:wght@600;800&family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 图标 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- 局部样式文件 -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 高性能 Canvas 交互星火背景 -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- 网页整体容器 -->
+  <div class="app-container">
+
+    <!-- 顶部导航栏 -->
+    <header class="global-header">
+      <div class="brand-logo" id="brand-logo">
+        <span class="logo-text">LEAPER<span>X</span></span>
+      </div>
+      <div class="header-slogan">
+        <span class="slogan-dot"></span>
+        <span class="slogan-text">点燃星火，行动跃迁</span>
+      </div>
+      <nav class="desktop-nav" aria-label="主要导航">
+        <a href="#hero" class="nav-link active" data-target="hero">探索</a>
+        <a href="#hub" class="nav-link" data-target="hub">跃迁中心</a>
+        <a href="#about" class="nav-link" data-target="about">关于</a>
+      </nav>
+      <!-- 移动端菜单按钮 -->
+      <button class="mobile-menu-toggle" id="menu-toggle" aria-label="切换菜单">
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </header>
+
+    <!-- 移动端侧边菜单 -->
+    <div class="mobile-nav-panel" id="mobile-nav">
+      <nav class="mobile-nav-list" aria-label="移动端导航">
+        <a href="#hero" class="mobile-nav-link" data-target="hero">探索</a>
+        <a href="#hub" class="mobile-nav-link" data-target="hub">跃迁中心</a>
+        <a href="#about" class="mobile-nav-link" data-target="about">关于</a>
+      </nav>
+    </div>
+
+    <!-- 主体内容 -->
+    <main class="main-content">
+
+      <!-- Section 1: Hero Section (宣传展示) -->
+      <section id="hero" class="hero-section active-section">
+        <div class="hero-inner">
+          <div class="hero-tagline">// SPARK YOUR LEAP</div>
+          <h1 class="hero-title">
+            <span class="glow-word">Learn</span> to <span class="action-word">Leap.</span>
+          </h1>
+          <p class="hero-subtitle">梦想起步，即刻跃迁。在这里，点燃智慧的星火，让行动实现质的飞跃。</p>
+          
+          <div class="hero-cta">
+            <button class="btn btn-primary" id="ignite-btn">
+              <span class="btn-glow"></span>
+              <span class="btn-text"><i class="fas fa-fire-flame-curved"></i> 点燃星火</span>
+            </button>
+            <button class="btn btn-secondary" id="explore-btn">
+              <span class="btn-text">开启跃迁之旅 <i class="fas fa-arrow-down"></i></span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Hub Section (板块入口) -->
+      <section id="hub" class="hub-section">
+        <div class="section-header">
+          <h2 class="section-title">LeaperX <span>跃迁核心</span></h2>
+          <p class="section-desc">连接AI前沿，聚焦个人成长，汇聚高效工具。选择您的跃迁轨道：</p>
+        </div>
+
+        <div class="hub-grid">
+          <!-- 卡片 1: LeaperX.AI -->
+          <div class="hub-card" id="card-ai" data-category="ai">
+            <div class="card-glow"></div>
+            <div class="card-border"></div>
+            <div class="card-content">
+              <div class="card-icon"><i class="fas fa-brain-circuit"></i></div>
+              <div class="card-badge">LEAPERX.AI</div>
+              <h3 class="card-title">AI前沿</h3>
+              <p class="card-text">认知重塑，智慧跃迁。追踪前沿人工智能技术，解析 LLM 浪潮与 Agent 革命，提供定制提示词方案与AI实践指南。</p>
+              <div class="card-footer">
+                <span class="action-link">进入轨道 <i class="fas fa-chevron-right"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 卡片 2: LeaperX.Grow -->
+          <div class="hub-card" id="card-grow" data-category="grow">
+            <div class="card-glow"></div>
+            <div class="card-border"></div>
+            <div class="card-content">
+              <div class="card-icon"><i class="fas fa-arrow-up-right-dots"></i></div>
+              <div class="card-badge">LEAPERX.GROW</div>
+              <h3 class="card-title">个人成长</h3>
+              <p class="card-text">自驱演进，效能跃迁。聚焦极客思维、第二大脑构建、知识沉淀与系统化时间管理，助力个体从被动应对走向自发质变。</p>
+              <div class="card-footer">
+                <span class="action-link">开启成长 <i class="fas fa-chevron-right"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 卡片 3: LeaperX.Tool -->
+          <div class="hub-card" id="card-tool" data-category="tool">
+            <div class="card-glow"></div>
+            <div class="card-border"></div>
+            <div class="card-content">
+              <div class="card-icon"><i class="fas fa-toolbox"></i></div>
+              <div class="card-badge">LEAPERX.TOOL</div>
+              <h3 class="card-title">工具资源</h3>
+              <p class="card-text">利器备至，生产跃迁。精选高效率软件、极客开发工具、优质开源项目与资源导航，告别无意义的摩擦，为行动加速。</p>
+              <div class="card-footer">
+                <span class="action-link">获取装备 <i class="fas fa-chevron-right"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: About Section (关于我们) -->
+      <section id="about" class="about-section">
+        <div class="about-container">
+          <div class="about-grid">
+            <div class="about-info">
+              <div class="about-tag">// LEAPERX MANIFESTO</div>
+              <h2 class="about-title">跃迁者宣言</h2>
+              <p class="about-p">我们相信，信息时代的个人力量正在被无限放大。然而，浩瀚的数据噪音与智能跃迁带来的时代摩擦，常常让我们迷失方向。</p>
+              <p class="about-p"><strong>LeaperX 跃迁者</strong>，旨在成为你数字世界里的助推引擎。在这里，我们通过深度的AI探索重构思维，通过系统性的成长方法论付诸行动，并通过极致的工具磨砺生产力。</p>
+              <blockquote class="about-quote">
+                “点燃星火，行动跃迁。不只是被动适应未来，而是主动跃入未来。”
+              </blockquote>
+            </div>
+            <div class="about-stats">
+              <div class="stat-card">
+                <span class="stat-num" id="stat-ai-pct">99%</span>
+                <span class="stat-label">AI 认知武装</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-num" id="stat-grow-rate">10x</span>
+                <span class="stat-label">效能跨越提升</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-num" id="stat-tools-cnt">500+</span>
+                <span class="stat-label">效率利器收录</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 沉浸式详情展现面板 (Detail Panel Overlay) -->
+    <div class="detail-overlay" id="detail-overlay">
+      <div class="detail-backdrop" id="detail-backdrop"></div>
+      <div class="detail-container">
+        <!-- 关闭按钮 -->
+        <button class="detail-close-btn" id="detail-close-btn" aria-label="关闭详情">
+          <i class="fas fa-times"></i> BACK TO HUB
+        </button>
+
+        <div class="detail-content-wrapper">
+          <!-- 动态注入区域 -->
+          <div class="detail-header-panel">
+            <div class="detail-category-badge" id="detail-badge">AI</div>
+            <h2 class="detail-main-title" id="detail-title">跃迁标题</h2>
+            <p class="detail-main-subtitle" id="detail-subtitle">跃迁子标题</p>
+          </div>
+
+          <div class="detail-body-grid" id="detail-body">
+            <!-- 详细内容将在 JS 中渲染以确保证保优秀的平滑性能和模块化 -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 全局脚部 -->
+    <footer class="global-footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">LEAPER<span>X</span></div>
+          <p class="footer-tagline">点燃星火，行动跃迁。Learn to Leap.</p>
+        </div>
+        <div class="footer-links">
+          <div class="links-col">
+            <h4>探索轨道</h4>
+            <a href="#hub" class="footer-nav-link" data-category="ai">LeaperX.AI</a>
+            <a href="#hub" class="footer-nav-link" data-category="grow">LeaperX.Grow</a>
+            <a href="#hub" class="footer-nav-link" data-category="tool">LeaperX.Tool</a>
+          </div>
+          <div class="links-col">
+            <h4>社群连接</h4>
+            <a href="javascript:void(0)" class="social-link"><i class="fab fa-github"></i> GitHub</a>
+            <a href="javascript:void(0)" class="social-link"><i class="fab fa-discord"></i> Discord</a>
+            <a href="javascript:void(0)" class="social-link"><i class="fab fa-weixin"></i> 微信公众号</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="copyright">&copy; 2026 LEAPERX. All Rights Reserved. Powered by DeepMind Antigravity.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- 引入主交互逻辑 JS -->
+  <script src="js/script.js"></script>
+</body>
+</html>
