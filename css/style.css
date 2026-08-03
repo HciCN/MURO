@@ -178,13 +178,18 @@ body.is-mobile #cursor { display: none; }
 body.is-focus #focus-overlay { opacity: 1; pointer-events: auto; }
 body.is-focus #focus-panel { transform: translateX(0); }
 
-#fp-inner { height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 26px; padding: 8vh 52px; overflow: auto; }
-#fp-img { width: 100%; max-height: 46vh; object-fit: contain; display: block;
+#fp-inner { height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 24px; padding: 5vh 52px; overflow: auto; }
+.fp-head { display: flex; align-items: center; justify-content: space-between; font-size: 10px; letter-spacing: .16em; opacity: .62; }
+#fp-close { border: 0; background: transparent; color: inherit; font: inherit; letter-spacing: .08em; cursor: pointer; padding: 7px 0 7px 12px; }
+#fp-close:hover { opacity: .5; }
+#fp-img { width: 100%; max-height: 42vh; object-fit: contain; display: block;
   box-shadow: 0 30px 60px rgba(0, 0, 0, .18); background: #f2f2f2; }
-#fp-title { font-size: 30px; letter-spacing: -.03em; font-weight: 600; margin-bottom: 4px; }
+#fp-title { font-size: clamp(27px, 2.4vw, 38px); letter-spacing: -.04em; font-weight: 600; margin-bottom: 5px; }
 #fp-en { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; opacity: .5; margin-bottom: 14px; }
-#fp-meta { font-size: 13px; opacity: .75; margin-bottom: 14px; }
-#fp-desc { font-size: 14px; line-height: 1.75; opacity: .85; max-width: 40ch; margin-bottom: 24px; }
+#fp-meta { font-size: 12px; letter-spacing: .06em; opacity: .75; margin-bottom: 18px; }
+.fp-section { border-top: 1px solid rgba(0, 0, 0, .13); padding-top: 14px; margin-bottom: 24px; }
+.fp-label { display: block; font-size: 10px; letter-spacing: .16em; opacity: .52; margin-bottom: 9px; }
+#fp-desc { font-size: 14px; line-height: 1.78; opacity: .87; max-width: 40ch; }
 #fp-btn { display: inline-block; width: fit-content; font-size: 13px; font-weight: 600;
   border: 1px solid #111; padding: 10px 22px; transition: background .25s, color .25s; }
 #fp-btn:hover { background: #111; color: #fff; }

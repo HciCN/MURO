@@ -421,8 +421,9 @@
       fpTitle.textContent = g.name;
       fpEn.textContent = g.name_en || "";
       fpEn.style.display = g.name_en ? "" : "none";
-      fpMeta.textContent = [g.genre, g.year].filter(Boolean).join(" · ");
-      fpDesc.textContent = g.desc || "";
+      // 未填写资料时仍展示完整的详情版式；可在 games-data.js 的 genre/year/desc/link 字段补充真实内容。
+      fpMeta.textContent = [g.genre, g.year].filter(Boolean).join(" · ") || "GAME VAULT ARCHIVE · 已收录";
+      fpDesc.textContent = g.desc || ("《" + g.name + "》已收录于游戏仓库。这里可填写游戏背景、玩法特色、版本说明或你的推荐理由；在 js/games-data.js 为该游戏补充 desc 字段即可替换这段介绍。");
       if (g.link) { fpBtn.href = g.link; fpBtn.style.display = ""; }
       else { fpBtn.style.display = "none"; }
       document.body.classList.add("is-focus");
@@ -433,8 +434,10 @@
       document.body.classList.remove("is-focus");
     }
     document.getElementById("focus-overlay").addEventListener("click", closeFocus);
+    document.getElementById("fp-close").addEventListener("click", closeFocus);
+    // 在详情面板内浏览内容不会关闭；按 Esc、点关闭按钮或遮罩即可返回画廊。
     document.getElementById("focus-panel").addEventListener("click", function (e) {
-      if (e.target.id !== "fp-btn") closeFocus();
+      e.stopPropagation();
     });
 
     /* ---------- 帧循环 ---------- */
