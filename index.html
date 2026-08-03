@@ -1,354 +1,104 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>跃迁研究所 / LeaperX | 个人品牌与 3D 粒子音频空间</title>
-  <meta name="description" content="跃迁研究所 (LeaperX) 个人官方网站与 3D 粒子音乐空间。代表从学习萌芽，在实践中产生质的飞跃（Leap）以及科技与跨界的融合（X）。每日更新结构化 AI 趋势与全网热门资源。">
-  <meta name="keywords" content="跃迁研究所, LeaperX, 个人成长, AI前沿, 热门资源, 认知升级, 3D粒子, 音频律动, 网页播放器">
-  <meta name="author" content="LeaperX">
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;700;900&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome 矢量图标 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 本地样式表 -->
-  <link rel="stylesheet" href="css/style.css">
-  
-  <!-- 引入本地 Three.js 库 (v0.160.0) -->
-  <script src="js/three.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>游戏仓库 · Game Vault</title>
+<meta name="description" content="一个以 3D 流体画廊陈列的游戏资源收藏站">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+<!-- GSAP：仅用于 DOM 文字动画（加载失败时自动降级为 CSS 动画） -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body>
 
-  <!-- WebGL Canvas 粒子交互背景 (全屏固定层) -->
-  <canvas id="bg-canvas"></canvas>
-
-  <!-- 弹幕画布层 (全屏漂浮，不阻碍点击) -->
-  <div class="danmaku-stage" id="danmaku-stage"></div>
-
-  <!-- 全局网页容器 -->
-  <div class="global-wrapper">
-
-    <!-- ==========================================================================
-         顶部固定导航栏 (Logo & Menu & Dimension Engine)
-         ========================================================================== -->
-    <header class="global-header">
-      <div class="brand-logo" id="logo-btn" title="点击返回顶部播放器">LEAPER<i>X</i></div>
-      
-      <!-- 全局 3D 维度切换按钮 -->
-      <div class="floating-engine-control" id="engine-control">
-        <span class="floating-engine-label"><i class="fas fa-cubes"></i> 3D 粒子维度</span>
-        <button class="floating-engine-btn active" data-shape="0" title="切换星盘">星盘</button>
-        <button class="floating-engine-btn" data-shape="1" title="切换双螺旋 DNA">DNA</button>
-        <button class="floating-engine-btn" data-shape="2" title="切换心跳律动">心动</button>
-        <button class="floating-engine-btn" data-shape="3" title="切换立方体">立方体</button>
-        <button class="floating-engine-btn" data-shape="4" title="切换涡流">涡流</button>
-        <button class="floating-engine-btn" data-shape="5" title="切换波澜">波动</button>
-        <button class="floating-engine-btn" data-shape="6" title="切换神经网络">网络</button>
-      </div>
-
-      <!-- 桌面端导航链接 -->
-      <nav class="desktop-nav" aria-label="主导航">
-        <a href="#player-hero" class="nav-link active" data-target="player-hero">星火空间</a>
-        <a href="#about" class="nav-link" data-target="about">关于</a>
-        <a href="#resources" class="nav-link" data-target="resources">热门资源</a>
-        <a href="#tutorials" class="nav-link" data-target="tutorials">选择服务</a>
-        <a href="#contact" class="nav-link" data-target="contact">联系作者</a>
-      </nav>
-
-      <!-- 移动端菜单按钮 -->
-      <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="打开菜单">
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-
-      <!-- 静态系统标语常驻展示区 (全屏条框流动) -->
-      <div class="danmaku-hints-container">
-        <span class="hint-prefix">// 跃迁电波:</span>
-        <div class="hint-flow-viewport">
-          <div class="hint-flow-track" id="danmaku-hint-track">
-            <!-- 跑马灯由 JS 动态拼接填入 -->
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- 移动端抽屉式导航面板 -->
-    <div class="mobile-nav-panel" id="mobile-nav-drawer">
-      <nav class="mobile-nav-list" aria-label="移动端主导航">
-        <a href="#player-hero" class="mobile-nav-link" data-target="player-hero">沉浸空间</a>
-        <a href="#about" class="mobile-nav-link" data-target="about">关于作者</a>
-        <a href="#resources" class="mobile-nav-link" data-target="resources">全网热门资源</a>
-        <a href="#tutorials" class="mobile-nav-link" data-target="tutorials">选择服务</a>
-        <a href="#contact" class="mobile-nav-link" data-target="contact">联系作者</a>
-      </nav>
+<!-- ═══ 预加载器 ═══ -->
+<div id="loader">
+  <div class="loader-panel loader-top"></div>
+  <div class="loader-panel loader-bottom"></div>
+  <div class="loader-center">
+    <div id="loader-brand"></div>
+    <div class="loader-row">
+      <span id="loader-pct">00</span>
+      <div class="loader-line"><div id="loader-fill"></div></div>
     </div>
-
-    <!-- ==========================================================================
-         单页主内容流
-         ========================================================================== -->
-    <main class="page-content-flow">
-
-      <!-- Section 1: Hero Player (沉浸式极客控制台播放器第一屏) -->
-      <section id="player-hero" class="scroll-section">
-
-        <!-- 互动弹幕输入区 -->
-        <div class="danmaku-input-container">
-          <button id="danmaku-clear-btn" class="danmaku-clear-btn" title="一键清空弹幕"><i class="fas fa-trash-can"></i></button>
-          <input type="text" id="danmaku-text-input" placeholder="输入弹幕，融入星河空间..." maxlength="30">
-          <button id="danmaku-send-btn" title="发射弹幕"><i class="fas fa-paper-plane"></i></button>
-        </div>
-
-
-
-        <!-- 滚动引导 -->
-        <div class="scroll-discover-hint" id="scroll-discover-hint">
-          <span class="hint-text">向下滚动，即刻跃迁</span>
-          <div class="hint-arrow"><i class="fas fa-chevron-down"></i></div>
-        </div>
-      </section>
-
-      <!-- Section 2: ABOUT (关于作者) -->
-      <section id="about" class="scroll-section content-section">
-        <div class="section-title-wrapper">
-          <span class="section-tag">// IDENTITY & CONCEPT</span>
-          <h2 class="section-title">关于作者</h2>
-        </div>
-        <div class="about-grid-layout">
-          <div class="about-card-left">
-            <h3 class="about-name">跃迁研究所 / LeaperX</h3>
-            <p class="about-bio">
-              🚀 问题不在于认识世界，在于改变世界
-            </p>
-            <p class="about-detail-p">
-              我们不贩卖焦虑，不制造虚无的幻觉，只提供真正有用的资源、经过验证的成长方法，以及读得懂的 AI 前沿动态。在这个空间中，我们将声音、科技与思考耦合，与每一位终身学习者一同实现跃迁。
-            </p>
-            <blockquote class="about-quote">
-              “梦想起步，即刻跃迁。” / Learn to Leap.
-            </blockquote>
-          </div>
-          <div class="about-stats-right">
-            <div class="stat-box">
-              <span class="stat-number" id="count-papers">1亿+</span>
-              <span class="stat-label">全网粉丝</span>
-            </div>
-            <div class="stat-box">
-              <span class="stat-number" id="count-fps">100G+</span>
-              <span class="stat-label">已收录全网热门资源</span>
-            </div>
-            <div class="stat-box">
-              <span class="stat-number" id="count-users">50K+</span>
-              <span class="stat-label">终身学习者共同选择</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 3: RESOURCES (工具资源) -->
-      <section id="resources" class="scroll-section content-section">
-        <div class="section-title-wrapper">
-          <span class="section-tag">// HOT RESOURCES & ASSETS</span>
-          <h2 class="section-title">全网热门资源</h2>
-        </div>
-        <div class="resource-grid-container" id="resource-grid">
-          <!-- 动态由 JS 渲染，支持 3D 鼠标感知倾斜 -->
-        </div>
-      </section>
-
-      <!-- Section 4: SERVICES (选择服务) -->
-      <section id="tutorials" class="scroll-section content-section">
-        <div class="section-title-wrapper">
-          <span class="section-tag">// WORKFLOWS & SERVICES</span>
-          <h2 class="section-title">选择服务</h2>
-        </div>
-        <div class="tutorial-list-container" id="tutorial-grid">
-          <!-- 动态由 JS 渲染，点击触发富文本阅读模态框 -->
-        </div>
-      </section>
-
-
-      <!-- Section 6: CONTACT (联系作者) -->
-      <section id="contact" class="scroll-section content-section">
-        <div class="section-title-wrapper">
-          <span class="section-tag">// KEEP IN TOUCH & CHANNELS</span>
-          <h2 class="section-title">联系作者</h2>
-        </div>
-        
-        <div class="contact-box-wrapper">
-          <!-- 反馈表单 -->
-          <div class="contact-form-side">
-            <p class="contact-notice">
-              如果您对本站收录的全网热门资源、AI 教程或对 LeaperX 的内容有任何建议与反馈，欢迎随时提交邮箱或通过右侧联系方式进行联系。
-            </p>
-            <h3 class="contact-label-title">LEAP FEEDBACK</h3>
-            <div class="feedback-input-row">
-              <input type="email" placeholder="输入您的邮箱" class="feedback-input" id="feedback-email-input">
-              <button class="feedback-submit-btn" id="feedback-send-btn" aria-label="提交反馈">
-                <i class="fas fa-arrow-right"></i>
-              </button>
-            </div>
-            <div class="feedback-agreement">
-              <input type="checkbox" id="privacy-agreement-checkbox" class="agreement-checkbox">
-              <label for="privacy-agreement-checkbox" class="agreement-label">我已阅读并同意本空间的使用声明与个人隐私规范条款。</label>
-            </div>
-          </div>
-
-          <!-- 联络明细 -->
-          <div class="contact-details-side">
-            <h3 class="contact-label-title">CONTACT & CHANNELS</h3>
-            <div class="contact-social-links">
-              <div class="social-link-item weixin" id="weixin-btn" data-tooltip="微信号：HciM001">
-                <a href="javascript:void(0);" aria-label="微信"><i class="fab fa-weixin"></i></a>
-              </div>
-              <div class="social-link-item tiktok" data-tooltip="抖音主页：@跃迁研究所">
-                <a href="https://v.douyin.com/ashgzde1EY4/" target="_blank" rel="noopener noreferrer" aria-label="抖音"><i class="fab fa-tiktok"></i></a>
-              </div>
-              <div class="social-link-item redbook" data-tooltip="小红书主页：@跃迁研究所">
-                <a href="https://xhslink.com/m/AMHB9cH80Pi" target="_blank" rel="noopener noreferrer" aria-label="小红书"><span class="redbook-text">小红书</span></a>
-              </div>
-              <div class="social-link-item qq" data-tooltip="官方QQ群：973347596">
-                <a href="tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=973347596" aria-label="QQ"><i class="fab fa-qq"></i></a>
-              </div>
-              <div class="social-link-item email" data-tooltip="官方邮箱：contact@leaperx.com">
-                <a href="mailto:contact@leaperx.com" aria-label="邮箱"><i class="fas fa-envelope"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 页脚极细信息 -->
-        <footer class="footer-details-wrapper">
-          <div class="footer-top-row">
-            <div class="footer-logo">LEAPERX</div>
-            <p class="footer-slogan">LEARN TO LEAP / WEBGL 3D PARTICLE AUDIO REACTOR / EST. 2026</p>
-          </div>
-          <div class="footer-bottom-row">
-            <p class="copyright-text">LEAPERX SPACE &copy; 2026. ALL RIGHTS RESERVED. Powered by Antigravity.</p>
-          </div>
-        </footer>
-      </section>
-
-    </main>
-
-    <!-- ==========================================================================
-         磨砂玻璃悬浮模态框 (Modal) - 教程富文本阅读器
-         ========================================================================== -->
-    <div class="modal-wrapper" id="text-modal">
-      <div class="modal-backdrop" id="text-modal-backdrop"></div>
-      <article class="modal-card">
-        <button class="modal-close-btn" id="text-modal-close" aria-label="关闭">&times; [ 关闭 ]</button>
-        <div class="modal-header">
-          <span class="modal-category-badge" id="modal-badge-text">分类</span>
-          <h2 class="modal-main-title" id="modal-title-text">标题</h2>
-        </div>
-        <div class="modal-body-content" id="modal-body-text">
-          <!-- 动态注入 -->
-        </div>
-      </article>
-    </div>
-
-    <!-- ==========================================================================
-         常驻悬浮控制面板 (靠右侧定位，带折叠动效)
-         ========================================================================== -->
-    <div class="music-console-panel expanded" id="console-panel-trigger">
-      
-      <!-- 极简胶囊控制条 (代替了唱片圆球) -->
-      <div class="console-mini-indicator" id="console-mini-toggle" title="点击展开设置与歌单">
-        <!-- 播放/暂停按钮 -->
-        <button class="capsule-play-btn" id="capsule-play-pause-btn" title="播放 / 暂停">
-          <i class="fas fa-play" id="capsule-play-icon"></i>
-        </button>
-        <!-- 歌曲信息区 -->
-        <div class="capsule-song-info">
-          <span class="capsule-song-title" id="mini-display-title">星空律动中...</span>
-        </div>
-        <!-- 展开面板按钮 -->
-        <button class="capsule-settings-btn" id="capsule-settings-toggle" title="设置与歌单">
-          <i class="fas fa-sliders"></i>
-        </button>
-      </div>
-
-      <!-- 激活交互控制提示遮罩（移动端防静音触摸激活引导） -->
-      <div class="player-action-overlay" id="player-prompt-overlay">
-        <div class="prompt-icon"><i class="fas fa-play"></i></div>
-        <div class="prompt-title">CLICK TO LEAP</div>
-        <div class="prompt-subtitle">点击激活 3D 音频</div>
-      </div>
-
-      <!-- 展开态面板内容包裹器 -->
-      <div class="console-expanded-content">
-        
-        <!-- 关闭/收起按钮 (位于展开态的右上角) -->
-        <button class="console-close-trigger-btn" id="console-mini-collapse" title="收起面板">
-          <i class="fas fa-angles-down"></i>
-        </button>
-
-        <!-- 歌曲元数据 -->
-        <div class="music-meta-info">
-          <h1 class="music-title" id="song-display-title">等待激活...</h1>
-          <p class="music-artist" id="song-display-artist">请点击此控制面板启动音频通道</p>
-        </div>
-
-        <!-- 滚动歌词同步视窗 -->
-        <div class="player-lyrics-window" id="player-lyrics-window">
-          <div class="lyrics-scroll-wrap" id="lyrics-scroll-wrap">
-            <p class="lyric-line active">// 宇宙星光歌词感应中...</p>
-          </div>
-        </div>
-
-        <!-- 极细音乐进度条 -->
-        <div class="console-progress-wrapper" id="console-progress-bar" title="点击调整播放进度">
-          <div class="console-progress-fill" id="console-progress-fill"></div>
-          <div class="console-progress-handle" id="console-progress-handle"></div>
-        </div>
-        <div class="console-time-row">
-          <span id="time-current">00:00</span>
-          <span id="time-total">00:00</span>
-        </div>
-
-        <!-- 控制按钮组 -->
-        <div class="console-controls-row">
-          <button class="console-btn" id="loop-mode-btn" title="列表循环"><i class="fas fa-repeat"></i></button>
-          <button class="console-btn media-step" id="prev-song-btn" title="上一首"><i class="fas fa-step-backward"></i></button>
-          <button class="console-btn-play" id="play-pause-btn" title="播放 / 暂停">
-            <i class="fas fa-play" id="play-icon-state"></i>
-          </button>
-          <button class="console-btn media-step" id="next-song-btn" title="下一首"><i class="fas fa-step-forward"></i></button>
-          <button class="console-btn" id="visualizer-toggle-btn" title="形态自适应/锁死状态"><i class="fas fa-wand-magic-sparkles"></i></button>
-          <button class="console-btn active-immersive" id="immersive-mode-btn" title="沉浸模式 (自动收起)"><i class="fas fa-eye-slash"></i></button>
-        </div>
-
-        <!-- 粒子形态手动选择 -->
-        <div class="particle-effect-control-row">
-          <div class="particle-control-title">// 粒子效果手动选择</div>
-          <div class="particle-control-buttons" id="panel-particle-buttons">
-            <button class="mini-particle-btn active" data-shape="0" title="星盘">星盘</button>
-            <button class="mini-particle-btn" data-shape="1" title="DNA">DNA</button>
-            <button class="mini-particle-btn" data-shape="2" title="心动">心动</button>
-            <button class="mini-particle-btn" data-shape="3" title="立方体">魔方</button>
-            <button class="mini-particle-btn" data-shape="4" title="涡流">涡流</button>
-            <button class="mini-particle-btn" data-shape="5" title="波澜">波澜</button>
-            <button class="mini-particle-btn" data-shape="6" title="网络">网络</button>
-          </div>
-        </div>
-
-        <!-- 播放列表区域 (可折叠式抽屉) -->
-        <div class="playlist-wrapper" id="playlist-wrapper-container">
-          <button class="playlist-toggle-btn" id="playlist-toggle-btn" title="查看全部歌曲">
-            <span>// 展开特调律动列表</span>
-            <i class="fas fa-chevron-down" id="playlist-toggle-icon"></i>
-          </button>
-          <div class="playlist-container" id="playlist-container">
-            <!-- 由 JS 动态注入 -->
-          </div>
-        </div>
-
-      </div>
-    </div>
-
   </div>
+</div>
 
-  <!-- 引入主交互逻辑 JS -->
-  <script src="js/script.js"></script>
+<!-- ═══ 顶栏 ═══ -->
+<header id="topbar">
+  <div class="top-left">
+    <span id="brand"></span>
+    <div id="theme-toggle">
+      <span class="tt-item tt-mono">黑白</span>
+      <span class="tt-sep">/</span>
+      <span class="tt-item tt-color">幻彩</span>
+      <span id="tt-underline"></span>
+    </div>
+  </div>
+  <div class="top-right">
+    <span id="clock"></span>
+    <a href="#" id="contact-btn">联系</a>
+  </div>
+</header>
+
+<!-- ═══ 首页大字(遮罩入场) ═══ -->
+<div id="hero">
+  <div class="hero-corner hero-left"></div>
+  <div class="hero-line-wrap hero-mask"><div class="hero-line" id="hero-line-1"></div></div>
+  <div class="hero-line-wrap hero-mask"><div class="hero-line" id="hero-line-2"></div></div>
+  <div class="hero-corner hero-right"></div>
+  <div id="hero-foot"></div>
+</div>
+
+<!-- ═══ 3D 画廊舞台 ═══ -->
+<div id="stage"><div class="stage-error" id="stage-error" hidden></div></div>
+
+<!-- 悬停大图标题 -->
+<div id="hover-title-wrap"><div id="hover-title"></div></div>
+
+<!-- 布局切换器(JS 动态填充) -->
+<div id="switcher"></div>
+
+<!-- 线稿模式开关 -->
+<div id="frame-toggle" title="线稿模式">
+  <span class="ft-icon ft-photo"></span>
+  <span class="ft-icon ft-wire"></span>
+</div>
+
+<!-- 自定义光标 -->
+<div id="cursor"></div>
+
+<!-- ═══ 聚焦详情浮层 ═══ -->
+<div id="focus-overlay"></div>
+<aside id="focus-panel">
+  <div id="fp-inner">
+    <img id="fp-img" alt="">
+    <div id="fp-info">
+      <h2 id="fp-title"></h2>
+      <p id="fp-en"></p>
+      <p id="fp-meta"></p>
+      <p id="fp-desc"></p>
+      <a id="fp-btn" href="#" target="_blank" rel="noopener noreferrer">查看资源 →</a>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══ 幻彩模式背景层 ═══ -->
+<div id="blob-layer"><canvas id="blob-canvas"></canvas></div>
+
+<!-- ═══ 移动端卡片网格 ═══ -->
+<div id="mobile-cards">
+  <h1 id="mc-title"></h1>
+  <div id="mc-grid"></div>
+</div>
+
+<!-- ═══ 本地预览提示 ═══ -->
+<div id="file-tip" hidden></div>
+
+<!-- 数据(先加载) → 站点逻辑 → 3D 引擎 -->
+<script src="js/games-data.js"></script>
+<script src="js/site.js"></script>
+<script src="js/gallery.js"></script>
 </body>
 </html>
