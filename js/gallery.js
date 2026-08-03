@@ -403,7 +403,8 @@
       var hits = raycaster.intersectObjects(group.children);
       if (!hits.length) return;
       var card = cards[hits[0].object.userData.index];
-      if (card) openFocus(card);
+      // 点击进入独立详情页；详情、介绍与用户自行配置的合法访问链接均由该页呈现。
+      if (card) window.location.href = "detail.html?id=" + encodeURIComponent(hits[0].object.userData.index);
     });
 
     var fpImg = document.getElementById("fp-img");

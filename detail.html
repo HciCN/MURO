@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>游戏详情 · 游戏仓库</title>
+<meta name="description" content="游戏仓库的游戏详情页">
+<link rel="stylesheet" href="css/detail.css">
+</head>
+<body>
+<header class="detail-topbar">
+  <a class="brand" href="index.html">游戏仓库</a>
+  <a class="back" href="index.html">← 返回 3D 展厅</a>
+</header>
+<main id="detail-page" aria-live="polite">
+  <p class="eyebrow">GAME VAULT / ARCHIVE</p>
+  <div class="detail-grid">
+    <div class="cover-wrap"><img id="game-cover" alt=""></div>
+    <article class="content">
+      <p class="index" id="game-index"></p>
+      <h1 id="game-name"></h1>
+      <p class="en-name" id="game-en"></p>
+      <dl class="meta" id="game-meta"></dl>
+      <section>
+        <h2>游戏介绍</h2>
+        <p id="game-desc"></p>
+      </section>
+      <section class="visit-box" id="visit-box" hidden>
+        <h2>相关链接</h2>
+        <a id="game-link" target="_blank" rel="noopener noreferrer">打开链接 ↗</a>
+      </section>
+      <p class="note">链接由站点维护者自行配置。请仅添加拥有授权的官网、商店或合法资源站链接。</p>
+    </article>
+  </div>
+</main>
+<script src="js/games-data.js"></script>
+<script src="js/detail.js"></script>
+</body>
+</html>
