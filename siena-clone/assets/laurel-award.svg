@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="100%" height="100%" fill="none">
+  <!-- Elegant Golden Film / Game Festival Laurel Wreath -->
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCE0AD" />
+      <stop offset="50%" stop-color="#DFAC42" />
+      <stop offset="100%" stop-color="#C58C25" />
+    </linearGradient>
+  </defs>
+  <!-- Left Laurel Branch -->
+  <g fill="url(#goldGrad)">
+    <!-- Leaves Left -->
+    <path d="M 50 135 C 44 125 36 115 32 100 C 30 94 36 90 40 94 C 44 98 47 106 50 115 Z"/>
+    <path d="M 40 118 C 32 110 24 96 22 80 C 20 74 27 72 30 77 C 34 83 37 92 41 101 Z"/>
+    <path d="M 32 94 C 23 83 18 68 18 52 C 18 46 25 45 28 50 C 31 58 33 68 36 78 Z"/>
+    <path d="M 28 69 C 22 56 20 40 22 24 C 23 18 30 18 33 24 C 35 33 35 44 36 55 Z"/>
+    <path d="M 33 46 C 30 33 32 18 38 6 C 40 1 47 3 47 9 C 46 19 43 30 41 40 Z"/>
+    <path d="M 45 28 C 45 16 52 5 62 -2 C 66 -5 71 0 69 5 C 64 14 58 22 53 30 Z"/>
+    
+    <!-- Inner leaves Left -->
+    <path d="M 58 122 C 55 110 52 98 52 86 C 52 80 58 79 61 84 C 64 91 63 100 62 110 Z"/>
+    <path d="M 52 96 C 49 84 48 71 50 59 C 51 53 58 54 59 60 C 60 68 58 77 56 86 Z"/>
+    <path d="M 52 70 C 53 58 55 46 60 35 C 62 30 69 32 68 38 C 66 46 62 55 58 63 Z"/>
+    <!-- Stem Left -->
+    <path d="M 75 145 C 50 142 28 115 28 75 C 28 52 38 32 52 18" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Right Laurel Branch (Mirrored) -->
+  <g fill="url(#goldGrad)" transform="translate(160, 0) scale(-1, 1)">
+    <!-- Leaves Right -->
+    <path d="M 50 135 C 44 125 36 115 32 100 C 30 94 36 90 40 94 C 44 98 47 106 50 115 Z"/>
+    <path d="M 40 118 C 32 110 24 96 22 80 C 20 74 27 72 30 77 C 34 83 37 92 41 101 Z"/>
+    <path d="M 32 94 C 23 83 18 68 18 52 C 18 46 25 45 28 50 C 31 58 33 68 36 78 Z"/>
+    <path d="M 28 69 C 22 56 20 40 22 24 C 23 18 30 18 33 24 C 35 33 35 44 36 55 Z"/>
+    <path d="M 33 46 C 30 33 32 18 38 6 C 40 1 47 3 47 9 C 46 19 43 30 41 40 Z"/>
+    <path d="M 45 28 C 45 16 52 5 62 -2 C 66 -5 71 0 69 5 C 64 14 58 22 53 30 Z"/>
+    
+    <!-- Inner leaves Right -->
+    <path d="M 58 122 C 55 110 52 98 52 86 C 52 80 58 79 61 84 C 64 91 63 100 62 110 Z"/>
+    <path d="M 52 96 C 49 84 48 71 50 59 C 51 53 58 54 59 60 C 60 68 58 77 56 86 Z"/>
+    <path d="M 52 70 C 53 58 55 46 60 35 C 62 30 69 32 68 38 C 66 46 62 55 58 63 Z"/>
+    <!-- Stem Right -->
+    <path d="M 75 145 C 50 142 28 115 28 75 C 28 52 38 32 52 18" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  </g>
+  <!-- Center Star -->
+  <polygon points="80,68 83,77 92,77 85,82 87,91 80,86 73,91 75,82 68,77 77,77" fill="url(#goldGrad)" />
+  <!-- Bottom Ribbon Knot -->
+  <circle cx="80" cy="145" r="4" fill="url(#goldGrad)"/>
+</svg>
