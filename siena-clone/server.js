@@ -16,6 +16,7 @@ const MIME_TYPES = {
   '.webp': 'image/webp',
   '.svg': 'image/svg+xml',
   '.mp4': 'video/mp4',
+  '.webm': 'video/webm',
   '.mp3': 'audio/mpeg',
   '.woff2': 'font/woff2',
   '.woff': 'font/woff',
@@ -79,7 +80,7 @@ const server = http.createServer((req, res) => {
 
     // Handle HTTP Range Requests for video/audio streaming
     const range = req.headers.range;
-    if (range && (ext === '.mp4' || ext === '.mp3')) {
+    if (range && (ext === '.mp4' || ext === '.webm' || ext === '.mp3')) {
       const parts = range.replace(/bytes=/, '').split('-');
       const start = parseInt(parts[0], 10);
       const end = parts[1] ? parseInt(parts[1], 10) : stats.size - 1;
