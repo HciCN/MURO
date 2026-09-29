@@ -1,0 +1,299 @@
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
+
+const steamGames = JSON.parse(fs.readFileSync(path.join(__dirname, 'steam_fitgirl_games.json'), 'utf8'));
+
+const gamesConfig = [
+  {
+    folder: '01-black-myth-wukong',
+    slug: 'black-myth-wukong',
+    appId: 2358720,
+    title: 'BLACK MYTH: WUKONG',
+    cnTitle: '黑神话：悟空',
+    edition: '数字豪华版 / Digital Deluxe Edition',
+    category: '动作角色扮演 · Action RPG',
+    genre: 'Action RPG / 暗黑神话',
+    year: '2024',
+    developer: '游戏科学 (Game Science)',
+    publisher: '游戏科学 (Game Science)',
+    releaseDate: '2024 年 8 月 20 日',
+    steamUrl: 'https://store.steampowered.com/app/2358720/',
+    fitgirlUrl: 'https://fitgirl-repacks.site/black-myth-wukong/',
+    shortIntro: '雄奇壮丽的西游世界，风起云涌的天命征程。《黑神话：悟空》以中国古代文学巨著《西游记》为背景，重塑东方魔幻神话巅峰！',
+    fullIntro: '玩家将扮演一位“天命人”，为了探寻昔日传说的真相，踏上一条充满危险与惊奇的西游之路。在波澜壮阔的旅程中，你将遭遇各方神佛妖魔，领略独具匠心的中式美学场景，研习千变万化的棍法、法术与神通变身。每一次交锋皆是生死对决，每一段过往皆藏隐秘真相。',
+    specs: {
+      min: {
+        ram: '16 GB RAM (双通道推荐)',
+        storage: '130 GB 可用空间 (推荐固态 SSD)',
+        cpu: 'Intel Core i5-8400 / AMD Ryzen 5 1600',
+        gpu: 'NVIDIA GeForce GTX 1060 6GB / AMD Radeon RX 580 8GB',
+        os: 'Windows 10 64-bit (最新版本)',
+        directx: 'Version 11'
+      },
+      rec: {
+        ram: '16 GB - 32 GB RAM (极佳画质流光畅享)',
+        storage: '130 GB 可用空间 (必须使用高速 SSD)',
+        cpu: 'Intel Core i7-9700 / AMD Ryzen 5 5500',
+        gpu: 'NVIDIA GeForce RTX 2060 / AMD Radeon RX 5700 XT / RTX 4070',
+        os: 'Windows 10 / Windows 11 64-bit',
+        directx: 'Version 12 (支持 DLSS 3.5 / FSR)'
+      }
+    }
+  },
+  {
+    folder: '02-elden-ring',
+    slug: 'elden-ring',
+    appId: 1245620,
+    title: 'ELDEN RING: SHADOW OF THE ERDTREE',
+    cnTitle: '艾尔登法环：黄金树幽影',
+    edition: '黄金树幽影豪华版 / Shadow of the Erdtree Deluxe',
+    category: '开放世界魂系 · Dark Fantasy',
+    genre: 'Action RPG / 开放世界',
+    year: '2024',
+    developer: 'FromSoftware, Inc.',
+    publisher: 'FromSoftware / 万代南梦宫 (Bandai Namco)',
+    releaseDate: '2024 年 6 月 21 日',
+    steamUrl: 'https://store.steampowered.com/app/1245620/',
+    fitgirlUrl: 'https://fitgirl-repacks.site/elden-ring/',
+    shortIntro: '交界地与幽影之地交织的史诗挽歌，年度殿堂级开放世界黑暗奇幻巨制！',
+    fullIntro: '走进辽阔无垠的交界地与全新幽影之地，踏入危机四伏的地下迷宫与宏伟神殿。自由骑乘灵马穿梭于风貌各异的异域荒原，运用上百种武器、魔法、战灰与祷告构筑独属于你的褪色者传奇。随着米凯拉的足迹，揭开隐藏于黄金树背后的禁忌原罪。',
+    specs: {
+      min: {
+        ram: '12 GB RAM (最低畅玩)',
+        storage: '60 GB 可用空间 (SSD 固态硬盘)',
+        cpu: 'Intel Core i5-8400 / AMD Ryzen 3 3300X',
+        gpu: 'NVIDIA GeForce GTX 1060 3GB / AMD Radeon RX 580 4GB',
+        os: 'Windows 10 64-bit',
+        directx: 'Version 12'
+      },
+      rec: {
+        ram: '16 GB RAM (推荐全特效光追配置)',
+        storage: '60 GB 可用空间 (高速 NVMe SSD)',
+        cpu: 'Intel Core i7-8700K / AMD Ryzen 5 3600X',
+        gpu: 'NVIDIA GeForce GTX 1070 8GB / RTX 3060 / RX 5700 XT',
+        os: 'Windows 10 / Windows 11 64-bit',
+        directx: 'Version 12'
+      }
+    }
+  },
+  {
+    folder: '03-cyberpunk-2077',
+    slug: 'cyberpunk-2077',
+    appId: 1091500,
+    title: 'CYBERPUNK 2077: ULTIMATE EDITION',
+    cnTitle: '赛博朋克 2077：终极版',
+    edition: '终极典藏版 + 往日之影 / Ultimate Edition + Phantom Liberty',
+    category: '赛博科幻冒险 · Sci-Fi Open World',
+    genre: 'Open World RPG / 赛博朋克',
+    year: '2023',
+    developer: 'CD PROJEKT RED',
+    publisher: 'CD PROJEKT RED',
+    releaseDate: '2023 年 12 月 5 日',
+    steamUrl: 'https://store.steampowered.com/app/1091500/',
+    fitgirlUrl: 'https://fitgirl-repacks.site/cyberpunk-2077/',
+    shortIntro: '化身赛博雇佣兵 V，在权力与肉体改造至上的夜之城开启亡命传奇！',
+    fullIntro: '《赛博朋克 2077：终极版》整合了本篇及高分谍战资料片《往日之影》。在五光十色、危机四伏的夜之城与险恶的狗镇街头，搭配全方位义体改造与专属技能树，直面荒坂集团的阴谋与军用科技的博弈，谱写只属于你的传奇夜之城史诗。',
+    specs: {
+      min: {
+        ram: '12 GB RAM (最低系统内存需求)',
+        storage: '70 GB 可用空间 (必须使用 SSD 固态)',
+        cpu: 'Intel Core i7-6700 / AMD Ryzen 5 1600',
+        gpu: 'NVIDIA GeForce GTX 1060 6GB / AMD Radeon RX 580 8GB',
+        os: '64-bit Windows 10',
+        directx: 'Version 12'
+      },
+      rec: {
+        ram: '16 GB - 32 GB RAM (全景光线追踪推荐)',
+        storage: '70 GB 可用空间 (高速 NVMe SSD)',
+        cpu: 'Intel Core i7-12700 / AMD Ryzen 7 7800X3D',
+        gpu: 'NVIDIA GeForce RTX 2060 Super / RTX 4070 / RX 5700 XT',
+        os: '64-bit Windows 10 / Windows 11',
+        directx: 'Version 12 (支持路径光追与 DLSS 3.5 帧生成)'
+      }
+    }
+  },
+  {
+    folder: '04-red-dead-redemption-2',
+    slug: 'red-dead-redemption-2',
+    appId: 1174180,
+    title: 'RED DEAD REDEMPTION 2',
+    cnTitle: '荒野大镖客：救赎 2',
+    edition: '终极特别版 / Ultimate Edition',
+    category: '西部史诗巨作 · Western Open World',
+    genre: 'Open World Epic / 沉浸叙事',
+    year: '2019',
+    developer: 'Rockstar Games (R星)',
+    publisher: 'Rockstar Games',
+    releaseDate: '2019 年 12 月 5 日',
+    steamUrl: 'https://store.steampowered.com/app/1174180/',
+    fitgirlUrl: 'https://fitgirl-repacks.site/red-dead-redemption-2/',
+    shortIntro: '时代落幕，蛮荒不再。范德林德帮的亡命救赎之歌，游戏工业沉浸式体验巅峰！',
+    fullIntro: '1899 年的美国，蛮荒西部时代正在走向终结。亚瑟·摩根与范德林德帮众在联邦侦探与赏金猎人的围追堵截下颠沛流离。在令人屏息的雪山、沼泽与繁华工业镇圣丹尼斯之间，面对忠诚与背叛、生存与良知的永恒抉择，谱写无与伦比的西部哀歌。',
+    specs: {
+      min: {
+        ram: '8 GB RAM (最低运行内存)',
+        storage: '150 GB 可用空间',
+        cpu: 'Intel Core i5-2500K / AMD FX-6300',
+        gpu: 'NVIDIA GeForce GTX 770 2GB / AMD Radeon R9 280 3GB',
+        os: 'Windows 10 - 64-bit',
+        directx: 'Version 12 / Vulkan'
+      },
+      rec: {
+        ram: '12 GB - 16 GB RAM (推荐高画质内存)',
+        storage: '150 GB 可用空间 (固态 SSD 优先推荐)',
+        cpu: 'Intel Core i7-4770K / AMD Ryzen 5 1500X',
+        gpu: 'NVIDIA GeForce GTX 1060 6GB / RTX 2060 / RX 480 4GB',
+        os: 'Windows 10 / Windows 11 - 64-bit',
+        directx: 'Version 12 / Vulkan'
+      }
+    }
+  },
+  {
+    folder: '05-grand-theft-auto-v',
+    slug: 'grand-theft-auto-v',
+    appId: 271590,
+    title: 'GRAND THEFT AUTO V ENHANCED',
+    cnTitle: '侠盗猎车手 5：传承增强版',
+    edition: '全DLC终极整合版 / Enhanced Edition + Online',
+    category: '犯罪都市沙盒 · Crime Sandbox',
+    genre: 'Open World Action / 现代沙盒',
+    year: '2015',
+    developer: 'Rockstar North',
+    publisher: 'Rockstar Games',
+    releaseDate: '2015 年 4 月 14 日',
+    steamUrl: 'https://store.steampowered.com/app/271590/',
+    fitgirlUrl: 'https://fitgirl-repacks.site/grand-theft-auto-v/',
+    shortIntro: '阳光普照的洛圣都，交织三个亡命狂徒的犯罪狂想曲，史上最畅销娱乐产品！',
+    fullIntro: '年轻的街头骗子、退休的职业抢劫犯以及极度暴躁的疯子特雷弗，卷入由美国政府、军火贩子与娱乐工业织就的庞大阴谋网中。在广阔无垠的南加州都市与郊野间，执行精密策划的系列大型劫案，享受自由度登峰造极的拟真沙盒体验。',
+    specs: {
+      min: {
+        ram: '8 GB RAM (基础流畅运行)',
+        storage: '125 GB 可用空间',
+        cpu: 'Intel Core 2 Quad CPU Q6600 @ 2.40GHz / AMD Phenom 9850',
+        gpu: 'NVIDIA 9800 GT 1GB / AMD HD 4870 1GB',
+        os: 'Windows 10 64 位',
+        directx: 'DirectX 10 / 11 兼容'
+      },
+      rec: {
+        ram: '16 GB RAM (超清MOD与全特效推荐)',
+        storage: '125 GB 可用空间 (SSD 推荐)',
+        cpu: 'Intel Core i5 3470 @ 3.2GHz / AMD X8 FX-8350',
+        gpu: 'NVIDIA GTX 660 2GB / GTX 1660 / RTX 2060',
+        os: 'Windows 10 / Windows 11 64 位',
+        directx: 'DirectX 11'
+      }
+    }
+  },
+  {
+    folder: '06-god-of-war-ragnarok',
+    slug: 'god-of-war-ragnarok',
+    appId: 2322010,
+    title: 'GOD OF WAR: RAGNARÖK',
+    cnTitle: '战神：诸神黄昏',
+    edition: '数字豪华版 / Digital Deluxe Edition',
+    category: '北欧神话史诗 · Mythology Action',
+    genre: 'Action Adventure / 动作史诗',
+    year: '2024',
+    developer: 'Santa Monica Studio / Jetpack Interactive',
+    publisher: 'PlayStation Publishing LLC',
+    releaseDate: '2024 年 9 月 19 日',
+    steamUrl: 'https://store.steampowered.com/app/2322010/',
+    fitgirlUrl: 'https://fitgirl-repacks.site/god-of-war-ragnarok/',
+    shortIntro: '芬布尔之冬降临，阿斯加德诸神黄昏将至。奎托斯父子携手迎战命运风暴！',
+    fullIntro: '奎托斯与阿特柔斯必须探索九界各界寻找真相，而阿斯加德大军正厉兵秣马准备迎接预言中的末日大战。一路上，父子俩将领略惊心动魄的神话奇观，挥舞利维坦之斧、混沌之刃与德罗普尼尔长矛，在捍卫家庭与拯救九界众生间寻找属于自己的道路。',
+    specs: {
+      min: {
+        ram: '8 GB RAM (最低运行内存)',
+        storage: '190 GB 可用空间 (必须使用 SSD)',
+        cpu: 'Intel Core i5-4670k / AMD Ryzen 3 1200',
+        gpu: 'NVIDIA GTX 1060 6GB / AMD RX 5500 XT 8GB',
+        os: 'Windows 10 64-bit (20H1及以上)',
+        directx: 'Version 12'
+      },
+      rec: {
+        ram: '16 GB RAM (1080P/60FPS 极佳体验推荐)',
+        storage: '190 GB 可用空间 (高速 NVMe SSD)',
+        cpu: 'Intel Core i5-8600 / AMD Ryzen 5 3600',
+        gpu: 'NVIDIA RTX 2060 Super / RTX 3070 / AMD RX 5700',
+        os: 'Windows 10 / Windows 11 64-bit',
+        directx: 'Version 12 (支持 FSR 3.1 与 DLSS 3)'
+      }
+    }
+  },
+  {
+    folder: '07-baldurs-gate-3',
+    slug: 'baldurs-gate-3',
+    appId: 1086940,
+    title: "BALDUR'S GATE 3",
+    cnTitle: '博德之门 3',
+    edition: '数字豪华版 / Digital Deluxe Edition',
+    category: '奇幻角色扮演 · Fantasy CRPG',
+    genre: 'Turn-Based RPG / D&D 规则奇幻',
+    year: '2023',
+    developer: '拉瑞安工作室 (Larian Studios)',
+    publisher: 'Larian Studios',
+    releaseDate: '2023 年 8 月 3 日',
+    steamUrl: 'https://store.steampowered.com/app/1086940/',
+    fitgirlUrl: 'https://fitgirl-repacks.site/baldurs-gate-3/',
+    shortIntro: '斩获年度最佳 Game of the Year！在龙与地下城宇宙中书写同伴、背叛与至上力量的传奇！',
+    fullIntro: '灵体幼虫深植脑海，唤醒你体内潜藏的黑暗力量。在费伦大陆召集各具魅力的同伴，踏上穿越幽暗地域、月出之塔乃至繁华博德之门的旷世冒险。拥有无与伦比的剧情选择分支与回合制战术博弈，每一个决定都将彻底重塑整个世界的命运。',
+    specs: {
+      min: {
+        ram: '8 GB RAM (最低畅玩需求)',
+        storage: '150 GB 可用空间 (必须使用 SSD)',
+        cpu: 'Intel Core i5-4690 / AMD FX 8350',
+        gpu: 'NVIDIA GeForce GTX 970 / AMD RX 480 4GB',
+        os: 'Windows 10 64-bit',
+        directx: 'Version 11'
+      },
+      rec: {
+        ram: '16 GB RAM (推荐大战场丝滑运转内存)',
+        storage: '150 GB 可用空间 (高速 NVMe SSD)',
+        cpu: 'Intel Core i7-8700K / AMD Ryzen 5 3600',
+        gpu: 'NVIDIA GeForce RTX 2060 Super / RX 5700 XT 8GB',
+        os: 'Windows 10 / Windows 11 64-bit',
+        directx: 'Version 11 / Vulkan'
+      }
+    }
+  },
+  {
+    folder: '08-marvels-spider-man-2',
+    slug: 'marvels-spider-man-2',
+    appId: 2651280,
+    title: "MARVEL'S SPIDER-MAN 2",
+    cnTitle: '漫威蜘蛛侠 2',
+    edition: '数字豪华版 / Digital Deluxe Edition',
+    category: '超级英雄动作 · Superhero Action',
+    genre: 'Action Adventure / 跑酷动作',
+    year: '2025',
+    developer: '失眠组 (Insomniac Games) / Nixxes',
+    publisher: 'PlayStation Publishing LLC',
+    releaseDate: '2025 年 1 月 30 日',
+    steamUrl: 'https://store.steampowered.com/app/2651280/',
+    fitgirlUrl: 'https://fitgirl-repacks.site/marvels-spider-man-2/',
+    shortIntro: '双蛛合璧，比肩作战。共生体惊人力量降临漫威纽约，电影级视听跑酷盛宴！',
+    fullIntro: '彼得·帕克与迈尔斯·墨拉莱斯再度归来！利用全新蛛网翼在布鲁克林与皇后区上空极速滑翔，自由无缝切换两位蜘蛛侠。共生体的附体让彼得陷入力量与心魔的撕扯，面对猎人克莱文、蜥蜴人乃至残暴毒液的毁灭性威胁，拯救挚爱与城市！',
+    specs: {
+      min: {
+        ram: '16 GB RAM (最低运行内存)',
+        storage: '140 GB 可用空间 (必须使用 SSD)',
+        cpu: 'Intel Core i3-8100 / AMD Ryzen 3 3100',
+        gpu: 'NVIDIA GeForce GTX 1650 / AMD Radeon RX 5500 XT',
+        os: 'Windows 10/11 64-bit (1909以上)',
+        directx: 'Version 12'
+      },
+      rec: {
+        ram: '16 GB - 32 GB RAM (推荐高画质光追畅玩)',
+        storage: '140 GB 可用空间 (推荐高速 NVMe SSD)',
+        cpu: 'Intel Core i5-8400 / AMD Ryzen 5 3600',
+        gpu: 'NVIDIA GeForce RTX 3060 / AMD Radeon RX 5700 / RTX 4070',
+        os: 'Windows 10/11 64-bit',
+        directx: 'Version 12 (支持全套光追与 DLSS 3 帧生成)'
+      }
+    }
+  }
+];
+
+fs.writeFileSync(path.join(__dirname, 'games_fitgirl_config.json'), JSON.stringify(gamesConfig, null, 2), 'utf8');
+console.log('Saved games_fitgirl_config.json with all 8 games Chinese details and specs!');
